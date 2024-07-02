@@ -1,5 +1,7 @@
 import process from 'process';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import path from 'path';
+import { __dirname } from 'path';
 
 export default {
   mode: process.env.NODE_ENV || 'development',
