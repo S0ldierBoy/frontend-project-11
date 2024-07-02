@@ -1,16 +1,7 @@
-# 🚀 Welcome to your new awesome project!
+### Hexlet tests and linter status:
 
-This project has been created using **webpack-cli**, you can now run
+[![Actions Status](https://github.com/S0ldierBoy/frontend-project-11/workflows/hexlet-check/badge.svg)](https://github.com/S0ldierBoy/frontend-project-11/actions)
 
-```
-npm run build
-```
+[![Maintainability](https://api.codeclimate.com/v1/badges/4fdce5c3056f7937166b/maintainability)](https://codeclimate.com/github/S0ldierBoy/frontend-project-11/maintainability)
 
-or
-
-```
-yarn build
-```
-
-to bundle your application
 https://frontend-project-11-wy8h.vercel.app/
