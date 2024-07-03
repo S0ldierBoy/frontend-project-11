@@ -8,8 +8,17 @@ const __dirname = path.dirname(__filename);
 
 export default {
   mode: process.env.NODE_ENV || 'development',
+  entry: './src/index.js',
   module: {
     rules: [
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
+      },
+      {
+        test: /\.scss$/,
+        use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader'],
+      },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -20,14 +29,14 @@ export default {
           },
         },
       },
-
-      {
-        test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader', 'postcss-loader'],
-      },
       {
         test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        use: 'url-loader?limit=10000',
+        use: {
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+          },
+        },
       },
       {
         test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
@@ -37,12 +46,11 @@ export default {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html', // путь к вашему HTML файлу
-      filename: 'index.html', // имя выходного файла
-      inject: 'body', // куда вставлять скрипты (можно указать 'head' или true)
+      template: 'index.html',
+      filename: 'index.html',
+      inject: 'body',
     }),
   ],
-
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'src/index.js',
