@@ -3,33 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>RSS Reader</title>
+    <title>RSS агрегатор</title>
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      href="https://fonts.googleapis.com/css2?family=Arial:wght@400;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="container mt-5">
-      <h1 class="mb-4">RSS Reader</h1>
-      <form id="rss-form">
-        <div class="mb-3">
-          <label for="rss-input" class="form-label"
-            >Введите URL RSS-потока</label
-          >
-          <input
-            type="url"
-            class="form-control"
-            id="rss-input"
-            placeholder="https://example.com/rss"
-            required
-          />
-        </div>
-        <button type="submit" class="btn btn-primary">Добавить</button>
-      </form>
+    <div class="container">
+      <header>
+        <h1>RSS агрегатор</h1>
+        <p>Начните читать RSS сегодня! Это легко, это красиво.</p>
+      </header>
+      <main>
+        <form id="rss-form">
+          <input type="text" id="rss-input" placeholder="Ссылка RSS" required />
+          <button type="submit">Добавить</button>
+        </form>
+        <p class="example">Пример: https://lorem-rss.hexlet.app/feed</p>
+      </main>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="src/index.js"></script>
+    <footer>
+      <p>created by <a href="https://hexlet.io" target="_blank">Hexlet</a></p>
+    </footer>
   </body>
 </html>
