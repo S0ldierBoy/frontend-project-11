@@ -37,9 +37,12 @@ export default {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'index.html',
+      template: 'index.html', // путь к вашему HTML файлу
+      filename: 'index.html', // имя выходного файла
+      inject: 'body', // куда вставлять скрипты (можно указать 'head' или true)
     }),
   ],
+
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'src/index.js',
