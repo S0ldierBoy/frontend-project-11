@@ -3,7 +3,7 @@ import pluginJs from '@eslint/js';
 
 export default [
   {
-    ignores: ['**/node_modules/**', '**/dist/**/*', '**/dist/src/index.js'],
+    ignores: [' **/dist/**/*'],
     languageOptions: { globals: globals.browser },
   },
   pluginJs.configs.recommended,
