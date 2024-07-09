@@ -1,20 +1,73 @@
+//npx webpack serve
 import '../src/styles.css';
 import * as yup from 'yup';
+import onChange from 'on-change';
 
 const button = document.querySelector('[type="submit"]');
-button.addEventListener('click', () => {
-  alert('Кнопка была нажата!');
+const form = document.querySelector('.form-control');
+
+const schema = yup.object().shape({
+  url: yup.string().url().required(),
 });
 
-// const schema = yup.object().shape({
-//   name: yup.string().trim().required(),
-//   email: yup.string().required('email must be a valid email').email(),
-//   password: yup.string().required().min(6),
-//   passwordConfirmation: yup
-//     .string()
-//     .required('password confirmation is a required field')
-//     .oneOf(
-//       [yup.ref('password'), null],
-//       'password confirmation does not match to password'
-//     ),
-// });
+const inputMessages = {
+  err1: 'Ссылка должна быть валидным URL',
+  err2: 'Ресурс не содержит валидный RSS',
+  sucs: 'RSS успешно загружен',
+};
+
+const state = {
+  url: '',
+  isValid: false,
+  errors: {},
+};
+
+const validateUrl = (url) => {
+  schema
+    .validate({ url })
+    .then(() => {
+      state.errors = {};
+      state.isValid = true;
+    })
+    .catch((err) => {
+      state.errors = { url: err.message };
+      state.isValid = false;
+    });
+};
+
+const watchedState = onChange(state, (path, value) => {
+  validateUrl(value);
+
+  render();
+});
+
+const render = () => {
+  const errorField = document.querySelector('.feedback');
+  const formField = document.querySelector('#url-input');
+
+  if (!state.isValid) {
+    formField.classList.add('is-invalid');
+    errorField.textContent = inputMessages.err1;
+    errorField.classList.remove('text-success');
+    errorField.classList.add('text-danger');
+  } else if (state.isValid) {
+    formField.classList.remove('is-invalid');
+    errorField.textContent = '';
+    errorField.classList.remove('text-danger');
+    errorField.classList.add('text-success');
+  }
+};
+
+button.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (state.isValid) {
+    alert('Валидный URL');
+  } else {
+    alert('Не валидный URL');
+  }
+});
+
+form.addEventListener('input', (e) => {
+  const url = e.target.value;
+  watchedState.url = url;
+});
