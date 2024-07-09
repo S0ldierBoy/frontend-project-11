@@ -37,8 +37,6 @@ const validateUrl = (url) => {
 
 const watchedState = onChange(state, (path, value) => {
   validateUrl(value);
-
-  render();
 });
 
 const render = () => {
@@ -60,11 +58,7 @@ const render = () => {
 
 button.addEventListener('click', (e) => {
   e.preventDefault();
-  if (state.isValid) {
-    alert('Валидный URL');
-  } else {
-    alert('Не валидный URL');
-  }
+  render();
 });
 
 form.addEventListener('input', (e) => {
