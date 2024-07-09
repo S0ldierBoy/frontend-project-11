@@ -6,6 +6,7 @@ import onChange from 'on-change';
 
 const button = document.querySelector('[type="submit"]');
 const form = document.querySelector('.form-control');
+const input = document.querySelector('#url-input');
 
 const state = {
   url: '',
@@ -21,10 +22,17 @@ const watchedState = onChange(state, (path, value) => {
 
 button.addEventListener('click', (e) => {
   e.preventDefault();
-  render(state);
+  if (input.value !== '') {
+    input.setCustomValidity('');
+    render(state);
+  } else {
+    input.setCustomValidity('Это поле обязательно для заполнения');
+    input.reportValidity();
+  }
 });
 
 form.addEventListener('input', (e) => {
+  input.setCustomValidity('');
   const url = e.target.value;
   watchedState.url = url;
 });
