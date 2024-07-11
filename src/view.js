@@ -4,7 +4,7 @@ const inputMessages = {
   sucs: 'RSS успешно загружен',
 };
 
-const render = (state) => {
+const render = (form, state) => {
   const errorField = document.querySelector('.feedback');
   const formField = document.querySelector('#url-input');
 
@@ -18,6 +18,8 @@ const render = (state) => {
     errorField.textContent = '';
     errorField.classList.remove('text-danger');
     errorField.classList.add('text-success');
+    form.reset();
+    formField.focus();
   }
 };
 

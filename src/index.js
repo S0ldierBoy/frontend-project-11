@@ -4,8 +4,8 @@ import render from './view.js';
 import validateUrl from './validator.js';
 import onChange from 'on-change';
 
+const form = document.querySelector('.rss-form');
 const button = document.querySelector('[type="submit"]');
-const form = document.querySelector('.form-control');
 const input = document.querySelector('#url-input');
 
 const state = {
@@ -24,7 +24,7 @@ button.addEventListener('click', (e) => {
   e.preventDefault();
   if (input.value !== '') {
     input.setCustomValidity('');
-    render(state);
+    render(form, state);
   } else {
     input.setCustomValidity('Это поле обязательно для заполнения');
     input.reportValidity();
