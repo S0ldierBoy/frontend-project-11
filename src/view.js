@@ -1,18 +1,25 @@
-const render = (elements, state, i18n) => {
-  const { form, input, errorField } = elements;
+const renderError = (elements, error, i18n) => {
+  const { input, feedback } = elements;
+  input.classList.add('is-invalid');
+  feedback.textContent = i18n.t(error);
+  feedback.classList.remove('text-success');
+  feedback.classList.add('text-danger');
+};
 
-  if (!state.isValid) {
-    input.classList.add('is-invalid');
-    errorField.textContent = i18n.t('errors.err1');
-    errorField.classList.remove('text-success');
-    errorField.classList.add('text-danger');
-  } else if (state.isValid) {
-    input.classList.remove('is-invalid');
-    errorField.textContent = '';
-    errorField.classList.remove('text-danger');
-    errorField.classList.add('text-success');
-    // form.reset();
-    // input.focus();
+const renderSuccess = (elements, i18n) => {
+  const { input, feedback } = elements;
+  input.classList.remove('is-invalid');
+  feedback.textContent = i18n.t('successful.success1');
+  feedback.classList.remove('text-danger');
+  feedback.classList.add('text-success');
+};
+
+const render = (elements, state, i18n) => {
+  const { error } = state;
+  if (error) {
+    renderError(elements, error, i18n);
+  } else {
+    renderSuccess(elements, i18n);
   }
 };
 
