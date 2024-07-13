@@ -5,6 +5,8 @@ import onChange from 'on-change';
 import validateUrl from './validator.js';
 import render from './view.js';
 import resources from './locales/index.js';
+import axios from 'axios';
+import parser from './parser.js';
 
 const runApp = async () => {
   const i18nextInstance = i18n.createInstance();
@@ -36,9 +38,22 @@ const runApp = async () => {
     validateUrl(url).then((error) => {
       watchedState.error = error;
       if (!error) {
-        console.log('URL валиден:', url);
         e.target.reset();
         elements.input.focus();
+
+        axios
+          .get(
+            `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}`
+          )
+          .then((response) => {
+            return response.data; // Возвращаем данные из ответа
+          })
+          .then((data) => {
+            parser(data.contents); // Передаем содержимое для парсинга
+          })
+          .catch((error) => {
+            console.error('Ошибка при запросе:', error); // Обрабатываем ошибку запроса
+          });
       }
     });
   });
