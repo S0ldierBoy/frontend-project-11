@@ -3,10 +3,12 @@ import './styles.css';
 import i18n from 'i18next';
 import onChange from 'on-change';
 import validateUrl from './validator.js';
-import render from './view.js';
+import renderInput from './view/renderInput.js';
 import resources from './locales/index.js';
 import fetchRss from './utils.js';
-import parser from './parser.js';
+import domParser from './domParser.js';
+//import renderFeed from './view/renderFeed.js';
+import feedView from './view/index.js';
 
 const runApp = async () => {
   const i18nextInstance = i18n.createInstance();
@@ -27,8 +29,7 @@ const runApp = async () => {
   };
 
   const watchedState = onChange(state, (path, value) => {
-    render(elements, state, i18nextInstance);
-    console.log(state);
+    renderInput(elements, state, i18nextInstance);
   });
 
   elements.form.addEventListener('submit', (e) => {
@@ -43,7 +44,9 @@ const runApp = async () => {
         elements.input.focus();
 
         fetchRss(url).then((data) => {
-          parser(data.contents);
+          return domParser(data.contents).then((contents) =>
+            feedView(contents)
+          );
         });
       }
     });

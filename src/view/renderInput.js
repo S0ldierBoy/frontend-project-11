@@ -14,7 +14,7 @@ const renderSuccess = (elements, i18n) => {
   feedback.classList.add('text-success');
 };
 
-const render = (elements, state, i18n) => {
+const renderInput = (elements, state, i18n) => {
   const { error } = state;
   if (error) {
     renderError(elements, error, i18n);
@@ -23,4 +23,4 @@ const render = (elements, state, i18n) => {
   }
 };
 
-export default render;
+export default renderInput;
