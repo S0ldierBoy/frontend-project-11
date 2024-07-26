@@ -23,7 +23,7 @@ const renderPosts = (posts) => {
       'list-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
 
     const a = document.createElement('a');
-    a.href = post.url;
+    a.href = post.link;
     a.className = 'fw-normal link-secondary';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
