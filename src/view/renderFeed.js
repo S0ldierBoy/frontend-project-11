@@ -1,9 +1,12 @@
 const renderFeed = (data) => {
-  data.forEach(({ title, description }) => {
-    const mainDiv = document.querySelector('.feeds');
+  const mainDiv = document.querySelector('.feeds');
+  let feedsContainer = mainDiv.querySelector('.card');
+  
 
-    const cardDiv = document.createElement('div');
-    cardDiv.className = 'card border-0';
+  if (!feedsContainer) {
+    // Создаем новый контейнер, если его нет
+    feedsContainer = document.createElement('div');
+    feedsContainer.className = 'card border-0';
 
     const cardBodyDiv = document.createElement('div');
     cardBodyDiv.className = 'card-body';
@@ -12,33 +15,38 @@ const renderFeed = (data) => {
     h2.className = 'card-title h4';
     h2.textContent = 'Фиды';
 
-    cardBodyDiv.appendChild(h2);
-
     const ul = document.createElement('ul');
     ul.className = 'list-group border-0 rounded-0';
 
-    const li = document.createElement('li');
-    li.className = 'list-group-item border-0 border-end-0';
+    cardBodyDiv.append(h2);
+    feedsContainer.append(cardBodyDiv);
+    feedsContainer.append(ul);
 
-    const h3 = document.createElement('h3');
-    h3.className = 'h6 m-0';
-    h3.textContent = title;
+    mainDiv.append(feedsContainer);
+  } else {
+    // Добавляем новые данные
 
-    const p = document.createElement('p');
-    p.className = 'm-0 small text-black-50';
-    p.textContent = description;
+    const ul = feedsContainer.querySelector('ul');
+    ul.innerHTML = ''
 
-    li.appendChild(h3);
-    li.appendChild(p);
+    data.forEach(({ title, description }) => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item border-0 border-end-0';
 
-    ul.appendChild(li);
+      const h3 = document.createElement('h3');
+      h3.className = 'h6 m-0';
+      li.append(h3);
 
-    cardDiv.appendChild(cardBodyDiv);
-    cardDiv.appendChild(ul);
-    mainDiv.appendChild(cardDiv);
+      const p = document.createElement('p');
+      p.className = 'm-0 small text-black-50';
+      li.append(p);
 
-    return mainDiv;
-  });
+      h3.textContent = title;
+      p.textContent = description;
+
+      ul.append(li);
+    });
+  }
 };
 
 export default renderFeed;
