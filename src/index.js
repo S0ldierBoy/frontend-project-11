@@ -24,13 +24,18 @@ const runApp = async () => {
   };
 
   const state = {
+    urls: [],
     error: null,
-    feeds: [], // Добавляем массив для хранения фидов
-    posts: [], // Добавляем массив для хранения постов
+    feeds: [],
+    posts: [],
+    uiState: {
+      loading: false,
+    },
   };
 
   const watchedState = onChange(state, (path, value) => {
     if (path === 'feeds' || path === 'posts') {
+      console.log(state);
       feedView(state, i18nextInstance); // Передаем state и i18nextInstance в feedView
     } else {
       renderInput(elements, state, i18nextInstance);
@@ -42,18 +47,19 @@ const runApp = async () => {
     const formData = new FormData(e.target);
     const url = formData.get('url');
 
-    validateUrl(url).then((error) => {
+    validateUrl(url, state).then((error) => {
       watchedState.error = error;
 
       if (!error) {
+        watchedState.urls.unshift(url); // Добавляем URL только после успешной валидации
         e.target.reset();
         elements.input.focus();
 
         fetchRss(url)
           .then((data) => domParser(data.contents))
           .then((parsedData) => {
-            watchedState.feeds = parsedData.feed; // Обновляем состояние фидов
-            watchedState.posts = parsedData.posts; // Обновляем состояние постов
+            watchedState.feeds.unshift(parsedData.feed); // Добавляем новые фиды в начало массива
+            watchedState.posts = [...parsedData.posts, ...watchedState.posts]; // Обновляем состояние постов
           });
       }
     });
