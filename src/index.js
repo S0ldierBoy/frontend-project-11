@@ -34,8 +34,9 @@ const runApp = async () => {
   };
 
   const watchedState = onChange(state, (path, value) => {
+    console.log(path);
     if (path === 'feeds' || path === 'posts') {
-      console.log(state);
+      
       feedView(state, i18nextInstance); // Передаем state и i18nextInstance в feedView
     } else {
       renderInput(elements, state, i18nextInstance);
@@ -55,7 +56,7 @@ const runApp = async () => {
         e.target.reset();
         elements.input.focus();
 
-        fetchRss(url)
+        fetchRss(url, state)
           .then((data) => domParser(data.contents))
           .then((parsedData) => {
             watchedState.feeds.unshift(...parsedData.feed); // Добавляем новые фиды в начало массива
@@ -67,3 +68,4 @@ const runApp = async () => {
 };
 
 runApp();
+// нужно модифицировать и отправлять ошибки в стейт и там отрисовывать
