@@ -34,6 +34,7 @@ const runApp = async () => {
   };
 
   const watchedState = onChange(state, (path, value) => {
+    console.log(state)
     switch (path) {
       case 'feeds':
       case 'posts':
