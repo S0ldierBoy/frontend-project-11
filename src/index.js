@@ -58,8 +58,8 @@ const runApp = async () => {
         fetchRss(url)
           .then((data) => domParser(data.contents))
           .then((parsedData) => {
-            watchedState.feeds.unshift(parsedData.feed); // Добавляем новые фиды в начало массива
-            watchedState.posts.unshift(parsedData.posts); // Обновляем состояние постов
+            watchedState.feeds.unshift(...parsedData.feed); // Добавляем новые фиды в начало массива
+            watchedState.posts.unshift(...parsedData.posts); // Обновляем состояние постов
           });
       }
     });
