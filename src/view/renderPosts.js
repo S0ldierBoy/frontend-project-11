@@ -59,7 +59,7 @@ const renderPosts = (posts) => {
       const mainBox = document.querySelector('.d-flex'); // вся страница
 
       modalFade.classList.add('show');
-      modalFade.setAttribute('style', 'display: block');
+      modalFade.setAttribute('style', 'display: block;');
 
       const linkButton = modalContent.querySelector('.btn-primary');
       const closeButton = modalContent.querySelector('.btn-secondary');
@@ -70,7 +70,6 @@ const renderPosts = (posts) => {
 
       closeButton.addEventListener('click', (e) => {
         modalFade.classList.remove('show');
-        modalFade.removeAttribute('style');
         modalFade.style.display = 'none';
       });
     });
@@ -82,12 +81,6 @@ const renderPosts = (posts) => {
 };
 
 export default renderPosts;
-// const doc = document.querySelector('.list-group-item');
-//const targetId = e.target.dataset.id;
-//       const element = document.querySelector(`a[data-id="${targetId}"]`);
-//       console.log(element);
-//       console.log(element.href);
-//       console.log(element.textContent);
 
 // class="d-flex flex-column min-vh-100 modal-open" style="overflow: hidden; padding-right: 14px;"><div class="modal fade show" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-modal="true" style="display: block;"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Lorem ipsum 2024-08-09T13:57:00Z</h5><button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body text-break">Esse id id irure proident officia nulla ad occaecat nulla aliquip nostrud sunt.</div><div class="modal-footer"><a class="btn btn-primary full-article" href="http://example.com/test/1723211820" role="button" target="_blank" rel="noopener noreferrer">Читать полностью </a><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button></div></div></div></div><main class="flex-grow-1"><section class="container-fluid bg-dark p-5"><div class="row"><div class="col-md-10 col-lg-8 mx-auto text-white"><h1 class="display-3 mb-0">RSS агрегатор</h1><p class="lead">Начните читать RSS сегодня! Это легко, это красиво.</p><form action="" class="rss-form text-body"><div class="row"><div class="col"><div class="form-floating"><input id="url-input" autofocus="" required="" name="url" aria-label="url" class="form-control w-100" placeholder="ссылка RSS" autocomplete="off"> <label for="url-input">Ссылка RSS</label></div></div><div class="col-auto"><button type="submit" aria-label="add" class="h-100 btn btn-lg btn-primary px-sm-5">Добавить</button></div></div></form><p class="mt-2 mb-0 text-muted">Пример: https://lorem-rss.hexlet.app/feed</p><p class="feedback m-0 position-absolute small text-success">RSS успешно загружен</p></div></div></section><section class="container-fluid container-xxl p-5"><div class="row"><div class="col-md-10 col-lg-8 order-1 mx-auto posts"><div class="card border-0">
 //       <div class="card-body"><h2 class="card-title h4">Посты</h2></div>
