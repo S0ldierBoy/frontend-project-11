@@ -34,11 +34,15 @@ const runApp = async () => {
   };
 
   const watchedState = onChange(state, (path, value) => {
-    console.log(path);
-    if (path === 'feeds' || path === 'posts') {
-      feedView(state, i18nextInstance); // Передаем state и i18nextInstance в feedView
-    } else {
-      renderInput(elements, state, i18nextInstance);
+    console.log('Changed path:', path, 'New value:', value);
+
+    switch (path) {
+      case 'feeds':
+      case 'posts':
+        feedView(state, i18nextInstance);
+        break;
+      default:
+        renderInput(elements, state, i18nextInstance);
     }
   });
 
@@ -47,24 +51,28 @@ const runApp = async () => {
     const formData = new FormData(e.target);
     const url = formData.get('url').trim();
 
-    validateUrl(url, state).then((error) => {
-      watchedState.error = error;
+    validateUrl(url, state)
+      .then(() => {
+        watchedState.error = null; // Сбрасываем ошибку
+        watchedState.urls.unshift(url); // Добавляем URL
+        return fetchRss(url);
+      })
+      .then((data) => domParser(data.contents))
+      .then((parsedData) => {
+        watchedState.feeds.unshift(...parsedData.feed);
+        watchedState.posts.unshift(...parsedData.posts);
+        watchedState.loading = true;
 
-      if (!error) {
-        watchedState.urls.unshift(url); // Добавляем URL только после успешной валидации
         e.target.reset();
         elements.input.focus();
-
-        fetchRss(url, state)
-          .then((data) => domParser(data.contents))
-          .then((parsedData) => {
-            watchedState.feeds.unshift(...parsedData.feed); // Добавляем новые фиды в начало массива
-            watchedState.posts.unshift(...parsedData.posts); // Обновляем состояние постов
-          });
-      }
-    });
+      })
+      .catch((error) => {
+        watchedState.error = error.message; // Записываем текст ошибки для отображения
+      });
   });
 };
 
 runApp();
 // нужно модифицировать и отправлять ошибки в стейт и там отрисовывать
+// e.target.reset();
+// elements.input.focus();

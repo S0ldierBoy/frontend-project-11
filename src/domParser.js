@@ -22,7 +22,7 @@ const domParser = (data) => {
       const items = xmlDoc.querySelectorAll('item');
       const channels = xmlDoc.querySelectorAll('channel');
 
-      if (!rss || !channel) {
+      if (!rss) {
         throw new Error('errors.err2');
       }
 

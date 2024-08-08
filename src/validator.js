@@ -7,10 +7,9 @@ const createSchema = (urls) =>
 
 const validateUrl = (url, state) => {
   const schema = createSchema(state.urls);
-  return schema
-    .validate({ url })
-    .then(() => null)
-    .catch((error) => error.message);
+  return schema.validate({ url }).catch((error) => {
+    throw new Error(error.message);
+  });
 };
 
 export default validateUrl;
