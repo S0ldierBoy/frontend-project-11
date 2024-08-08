@@ -6,6 +6,7 @@ const resources = {
         err2: 'Ресурс не содержит валидный RSS',
         duplicate: 'RSS уже существует',
         netError1: 'Проблемы с сетью',
+        netError2: 'Ошибка сервера',
       },
       successful: {
         success1: 'RSS успешно загружен',

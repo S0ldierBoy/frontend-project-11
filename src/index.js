@@ -36,7 +36,6 @@ const runApp = async () => {
   const watchedState = onChange(state, (path, value) => {
     console.log(path);
     if (path === 'feeds' || path === 'posts') {
-      
       feedView(state, i18nextInstance); // Передаем state и i18nextInstance в feedView
     } else {
       renderInput(elements, state, i18nextInstance);

@@ -18,8 +18,13 @@ const domParser = (data) => {
       const domPars = new DOMParser();
       const xmlDoc = domPars.parseFromString(data, 'application/xml');
 
+      const rss = xmlDoc.querySelector('rss');
       const items = xmlDoc.querySelectorAll('item');
       const channels = xmlDoc.querySelectorAll('channel');
+
+      if (!rss || !channel) {
+        throw new Error('errors.err2');
+      }
 
       const getFeed = Array.from(channels).map(parseChannel);
       const getPosts = Array.from(items).map(parseItem);
