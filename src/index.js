@@ -45,7 +45,7 @@ const runApp = async () => {
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const url = formData.get('url');
+    const url = formData.get('url').trim();
 
     validateUrl(url, state).then((error) => {
       watchedState.error = error;
@@ -59,7 +59,7 @@ const runApp = async () => {
           .then((data) => domParser(data.contents))
           .then((parsedData) => {
             watchedState.feeds.unshift(parsedData.feed); // Добавляем новые фиды в начало массива
-            watchedState.posts = [...parsedData.posts, ...watchedState.posts]; // Обновляем состояние постов
+            watchedState.posts.unshift(parsedData.posts); // Обновляем состояние постов
           });
       }
     });

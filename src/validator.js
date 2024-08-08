@@ -6,9 +6,7 @@ const createSchema = (urls) =>
       .string()
       .required('errors.err1')
       .url('errors.err1')
-      .test('unique-url', 'errors.duplicate', function (value) {
-        return !urls.includes(value);
-      }),
+      .notOneOf(urls, 'errors.duplicate'),
   });
 
 const validateUrl = (url, state) => {
