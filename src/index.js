@@ -53,11 +53,11 @@ const runApp = async () => {
     validateUrl(url, state)
       .then(() => {
         watchedState.error = null; // Сбрасываем ошибку
-        watchedState.urls.unshift(url); // Добавляем URL
         return fetchRss(url);
       })
       .then((data) => domParser(data.contents))
       .then((parsedData) => {
+        watchedState.urls.unshift(url); // Добавляем URL
         watchedState.feeds.unshift(...parsedData.feed);
         watchedState.posts.unshift(...parsedData.posts);
         watchedState.loading = true;
@@ -67,7 +67,6 @@ const runApp = async () => {
       })
       .catch((error) => {
         watchedState.error = error.message; // Записываем текст ошибки для отображения
-        //watchedState.urls.shift(url);
       });
   });
 };
