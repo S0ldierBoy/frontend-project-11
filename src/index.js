@@ -67,6 +67,7 @@ const runApp = async () => {
       })
       .catch((error) => {
         watchedState.error = error.message; // Записываем текст ошибки для отображения
+        //watchedState.urls.shift(url);
       });
   });
 };
