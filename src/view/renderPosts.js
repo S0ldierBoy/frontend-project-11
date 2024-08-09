@@ -83,7 +83,7 @@ const renderPosts = (posts) => {
 
     const a = document.createElement('a');
     a.href = post.link;
-    a.className = 'fw-normal link-secondary';
+    a.className = 'post-text fw-normal link-secondary';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
