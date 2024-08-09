@@ -16,7 +16,7 @@ const renderFeed = (data) => {
     h2.textContent = 'Фиды';
 
     const ul = document.createElement('ul');
-    ul.className = 'list-group border-0 rounded-0';
+    ul.className = 'feeds-group border-0 rounded-0';
 
     cardBodyDiv.append(h2);
     feedsContainer.append(cardBodyDiv);
@@ -31,7 +31,7 @@ const renderFeed = (data) => {
 
     data.forEach(({ title, description }) => {
       const li = document.createElement('li');
-      li.className = 'list-group-item border-0 border-end-0';
+      li.className = 'feeds-group-item border-0 border-end-0';
 
       const h3 = document.createElement('h3');
       h3.className = 'h6 m-0';

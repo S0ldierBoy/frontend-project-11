@@ -15,7 +15,7 @@ const renderPosts = (posts) => {
     h2.textContent = 'Посты';
 
     const ul = document.createElement('ul');
-    ul.className = 'list-group border-0 rounded-0';
+    ul.className = 'posts-group border-0 rounded-0';
 
     cardBodyDiv.appendChild(h2);
     cardDiv.appendChild(cardBodyDiv);
@@ -79,7 +79,7 @@ const renderPosts = (posts) => {
   posts.forEach((post) => {
     const li = document.createElement('li');
     li.className =
-      'list-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
+      'posts-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
 
     const a = document.createElement('a');
     a.href = post.link;
@@ -102,6 +102,28 @@ const renderPosts = (posts) => {
     li.appendChild(a);
     li.appendChild(button);
     ul.appendChild(li);
+  });
+
+  // const postsGroup = document.querySelector('.posts-group');
+  // const postsItems = postsGroup.querySelectorAll('.post-text');
+
+  // postsItems.forEach((a) => {
+  //   a.addEventListener('click', () => {
+  //     a.classList.remove('post-text');
+  //     a.classList.add('post-text-muted');
+  //   });
+  // });
+
+  function handlePostClick(event) {
+    const clickedPost = event.currentTarget;
+    clickedPost.classList.remove('post-text');
+    clickedPost.classList.add('post-text-muted');
+  }
+
+  const postsGroup = document.querySelector('.posts-group');
+  const postsItems = postsGroup.querySelectorAll('.post-text');
+  postsItems.forEach((a) => {
+    a.addEventListener('click', handlePostClick);
   });
 
   // Добавляем обработчик для закрытия модального окна
