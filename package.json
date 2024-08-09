@@ -10,7 +10,9 @@
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "serve": "webpack serve",
+    "build-css": "node-sass scss/main.scss src/styles.css --output-style compressed",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
   },
   "repository": {
     "type": "git",
@@ -37,6 +39,8 @@
     "eslint": "^9.6.0",
     "globals": "^15.8.0",
     "html-webpack-plugin": "^5.6.0",
+    "node-sass": "^9.0.0",
+    "nodemon": "^3.1.4",
     "postcss": "^8.4.39",
     "postcss-loader": "^8.1.1",
     "prettier": "^3.3.2",
@@ -46,10 +50,13 @@
     "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "axios": "^1.7.2",
+    "bootstrap": "^5.3.3",
     "i18next": "^23.11.5",
     "lodash": "^4.17.21",
     "on-change": "^5.0.1",
+    "sass": "^1.77.8",
     "yup": "^1.4.0"
   }
 }

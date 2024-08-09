@@ -33,7 +33,7 @@ const runApp = async () => {
     },
   };
 
-  const watchedState = onChange(state, (path, value) => {
+  const watchedState = onChange(state, (path) => {
     console.log(state);
     switch (path) {
       case 'feeds':
