@@ -34,7 +34,7 @@ const runApp = async () => {
   };
 
   const watchedState = onChange(state, (path, value) => {
-    console.log(state)
+    console.log(state);
     switch (path) {
       case 'feeds':
       case 'posts':
@@ -72,6 +72,3 @@ const runApp = async () => {
 };
 
 runApp();
-// нужно модифицировать и отправлять ошибки в стейт и там отрисовывать
-// e.target.reset();
-// elements.input.focus();
