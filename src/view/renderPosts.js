@@ -104,16 +104,6 @@ const renderPosts = (posts) => {
     ul.appendChild(li);
   });
 
-  // const postsGroup = document.querySelector('.posts-group');
-  // const postsItems = postsGroup.querySelectorAll('.post-text');
-
-  // postsItems.forEach((a) => {
-  //   a.addEventListener('click', () => {
-  //     a.classList.remove('post-text');
-  //     a.classList.add('post-text-muted');
-  //   });
-  // });
-
   function handlePostClick(event) {
     const clickedPost = event.currentTarget;
     clickedPost.classList.remove('post-text');

@@ -13,3 +13,17 @@
   font-weight: bold !important;
   color: #62676b !important;
 }
+
+.posts-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+  padding-left: 15px;
+}
+
+.posts-group-item {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
