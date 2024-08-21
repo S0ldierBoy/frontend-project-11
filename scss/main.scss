@@ -29,7 +29,7 @@
   align-items: center;
 }
 
-.posts-group-item {
+.posts-group-item a {
   flex-grow: 1;
   margin-right: 15px; // Отступ между текстом и кнопкой *
   white-space: nowrap; // Запрещает перенос текста на новую строку

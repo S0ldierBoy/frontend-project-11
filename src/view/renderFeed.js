@@ -1,7 +1,6 @@
 const renderFeed = (data) => {
   const mainDiv = document.querySelector('.feeds');
   let feedsContainer = mainDiv.querySelector('.card');
-  
 
   if (!feedsContainer) {
     // Создаем новый контейнер, если его нет
@@ -27,7 +26,7 @@ const renderFeed = (data) => {
     // Добавляем новые данные
 
     const ul = feedsContainer.querySelector('ul');
-    ul.innerHTML = ''
+    ul.innerHTML = '';
 
     data.forEach(({ title, description }) => {
       const li = document.createElement('li');
