@@ -1,23 +1,27 @@
 @import '../node_modules/bootstrap/scss/bootstrap';
 
+$primary-color: rgb(0, 76, 255) !important;
+$muted-color: #6c757d !important;
+$gap-size: 15px;
+
 .text-muted {
-  color: #6c757d !important;
+  color: $muted-color;
 }
 
 .post-text {
   font-weight: bold !important;
-  color: rgb(0, 76, 255) !important;
+  color: $primary-color;
 }
 
 .post-text-muted {
   font-weight: bold !important;
-  color: #62676b !important;
+  color: $muted-color;
 }
 
 .feeds-group {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: $gap-size;
   list-style: none;
   padding-left: 15px;
 }
@@ -25,7 +29,7 @@
 .posts-group {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: $gap-size;
   align-items: flex-start;
   padding-left: 15px;
 }
