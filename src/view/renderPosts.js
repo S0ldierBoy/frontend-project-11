@@ -104,6 +104,7 @@ const renderPosts = (posts) => {
     ul.appendChild(li);
   });
 
+  // Функция смены стилей строки с ссылкой
   const handlePostClick = (event) => {
     const clickedElement = event.currentTarget;
     const parentLi = clickedElement.closest('li'); // Находим родительский элемент <li>
@@ -119,10 +120,9 @@ const renderPosts = (posts) => {
     .forEach((element) => element.addEventListener('click', handlePostClick));
 
   // Добавляем обработчик для закрытия модального окна
-  const closeButtons = document.querySelectorAll('[data-bs-dismiss="modal"]');
-  closeButtons.forEach((button) => {
-    button.addEventListener('click', closeModal);
-  });
+  document
+    .querySelectorAll('[data-bs-dismiss="modal"]')
+    .forEach((button) => button.addEventListener('click', closeModal));
 
   // Закрытие при клике вне модального окна
   document.addEventListener('click', (event) => {
