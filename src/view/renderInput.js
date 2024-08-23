@@ -1,3 +1,9 @@
+const renderDefault = (elements) => {
+  elements.feedback.textContent = '';
+  elements.input.classList.remove('is-invalid');
+  elements.feedback.classList.remove('text-success', 'text-danger');
+};
+
 const renderError = (elements, error, i18n) => {
   const { input, feedback } = elements;
   input.classList.add('is-invalid');
@@ -16,10 +22,13 @@ const renderSuccess = (elements, i18n) => {
 
 const renderInput = (elements, state, i18n) => {
   const { error } = state;
+
   if (error) {
     renderError(elements, error, i18n);
-  } else {
+  } else if (state.urls.length > 0) {
     renderSuccess(elements, i18n);
+  } else {
+    renderDefault(elements);
   }
 };
 

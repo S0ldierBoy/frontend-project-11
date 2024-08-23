@@ -104,17 +104,19 @@ const renderPosts = (posts) => {
     ul.appendChild(li);
   });
 
-  function handlePostClick(event) {
-    const clickedPost = event.currentTarget;
-    clickedPost.classList.remove('post-text');
-    clickedPost.classList.add('post-text-muted');
-  }
+  const handlePostClick = (event) => {
+    const clickedElement = event.currentTarget;
+    const parentLi = clickedElement.closest('li'); // Находим родительский элемент <li>
+    const relatedLink = parentLi.querySelector('a.post-text'); // Находим связанную ссылку
 
-  const postsGroup = document.querySelector('.posts-group');
-  const postsItems = postsGroup.querySelectorAll('.post-text');
-  postsItems.forEach((a) => {
-    a.addEventListener('click', handlePostClick);
-  });
+    if (relatedLink) {
+      relatedLink.classList.replace('post-text', 'post-text-muted'); // Меняем классы ссылки
+    }
+  };
+
+  document
+    .querySelectorAll('.posts-group a.post-text, .posts-group button')
+    .forEach((element) => element.addEventListener('click', handlePostClick));
 
   // Добавляем обработчик для закрытия модального окна
   const closeButtons = document.querySelectorAll('[data-bs-dismiss="modal"]');

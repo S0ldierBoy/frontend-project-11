@@ -21,6 +21,7 @@ const runApp = async () => {
     input: document.querySelector('#url-input'),
     feedback: document.querySelector('.feedback'),
     modal: document.querySelector('modal-footer'),
+    submitButton: document.querySelector('button[type="submit"]'),
   };
 
   const state = {
@@ -28,13 +29,12 @@ const runApp = async () => {
     error: null,
     feeds: [],
     posts: [],
-    uiState: {
-      loading: false,
-    },
+    subButton: false,
   };
 
   const watchedState = onChange(state, (path) => {
-    console.log(state);
+    elements.submitButton.disabled = state.subButton;
+
     switch (path) {
       case 'feeds':
       case 'posts':
@@ -52,6 +52,7 @@ const runApp = async () => {
 
     validateUrl(url, state)
       .then(() => {
+        watchedState.subButton = true;
         watchedState.error = null; // Сбрасываем ошибку
         return fetchRss(url);
       })
@@ -60,13 +61,14 @@ const runApp = async () => {
         watchedState.urls.unshift(url); // Добавляем URL
         watchedState.feeds.unshift(...parsedData.feed);
         watchedState.posts.unshift(...parsedData.posts);
-        watchedState.loading = true;
+        watchedState.subButton = false;
 
         e.target.reset();
         elements.input.focus();
       })
       .catch((error) => {
         watchedState.error = error.message; // Записываем текст ошибки для отображения
+        watchedState.subButton = false;
       });
   });
 };
