@@ -72,8 +72,10 @@ const runApp = async () => {
       });
   });
 
+  // Функция для проверки обновлений RSS-потоков
   const checkForUpdates = () => {
-    state.urls.forEach((url) => {
+    // Пробегаемся по каждому сохраненному URL и проверяем наличие новых постов
+    const updatePromises = state.urls.map((url) =>
       fetchRss(url)
         .then((data) => domParser(data.contents))
         .then((parsedData) => {
@@ -90,12 +92,16 @@ const runApp = async () => {
         })
         .catch((error) => {
           console.error(`Error fetching RSS feed from ${url}:`, error.message);
-        });
-    });
+        })
+    );
 
-    setTimeout(checkForUpdates, 5000);
+    // Когда все запросы завершены, запускаем таймер для следующего цикла
+    Promise.all(updatePromises).finally(() => {
+      setTimeout(checkForUpdates, 5000); // 300000 ms = 5 минут
+    });
   };
 
+  // Запускаем начальную проверку после загрузки приложения
   checkForUpdates();
 };
 

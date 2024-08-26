@@ -4,20 +4,16 @@ $primary-color: rgb(0, 76, 255) !important;
 $muted-color: #6c757d !important;
 $gap-size: 15px;
 
+// Классы для управления цветами текста
 .text-muted {
   color: $muted-color;
 }
 
 .post-text {
-  font-weight: bold !important;
   color: $primary-color;
 }
 
-.post-text-muted {
-  font-weight: normal !important;
-  color: $muted-color;
-}
-
+// Группы элементов для постов и фидов
 .feeds-group {
   display: flex;
   flex-direction: column;
@@ -41,10 +37,11 @@ $gap-size: 15px;
   align-items: center;
 }
 
+// Стили для ссылок внутри постов
 .posts-group-item a {
   flex-grow: 1;
-  margin-right: 15px; // Отступ между текстом и кнопкой *
+  margin-right: 15px; // Отступ между текстом и кнопкой
   white-space: nowrap; // Запрещает перенос текста на новую строку
   overflow: hidden; // Прячет текст, который не помещается
-  text-overflow: ellipsis; //Добавляет троеточие в конце обрезанного текста
+  text-overflow: ellipsis; // Добавляет троеточие в конце обрезанного текста
 }

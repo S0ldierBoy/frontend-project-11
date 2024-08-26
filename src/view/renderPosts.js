@@ -1,9 +1,10 @@
+const clickedPosts = new Set();
+
 const renderPosts = (posts) => {
   const mainDiv = document.querySelector('.posts');
   let cardDiv = mainDiv.querySelector('.card');
 
   if (!cardDiv) {
-    // Создаем новый контейнер, если его нет
     cardDiv = document.createElement('div');
     cardDiv.className = 'card border-0';
 
@@ -24,66 +25,17 @@ const renderPosts = (posts) => {
     mainDiv.appendChild(cardDiv);
   }
 
-  // Очищаем существующий список постов
   const ul = cardDiv.querySelector('ul');
   ul.innerHTML = '';
 
-  // Функция для открытия модального окна
-  const openModal = (post) => {
-    const body = document.body;
-    const modalFade = document.querySelector('#modal');
-    const modalContent = modalFade.querySelector('.modal-content');
-    const modalTitle = modalContent.querySelector('.modal-title');
-    const modalBody = modalContent.querySelector('.modal-body');
-    const linkButton = modalContent.querySelector('.btn-primary');
-
-    body.classList.add('modal-open');
-    body.style.overflow = 'hidden';
-    body.style.paddingRight = '14px';
-
-    modalFade.classList.add('show');
-    modalFade.style.display = 'block';
-
-    modalTitle.textContent = post.title;
-    modalBody.textContent = post.description;
-    linkButton.href = post.link;
-
-    // Добавляем backdrop, если его еще нет
-    if (!document.querySelector('.modal-backdrop')) {
-      const backdrop = document.createElement('div');
-      backdrop.classList.add('modal-backdrop', 'fade', 'show');
-      document.body.appendChild(backdrop);
-    }
-  };
-
-  // Функция для закрытия модального окна
-  const closeModal = () => {
-    const body = document.body;
-    const modalFade = document.querySelector('#modal');
-
-    body.classList.remove('modal-open');
-    body.style.overflow = '';
-    body.style.paddingRight = '';
-
-    modalFade.classList.remove('show');
-    modalFade.style.display = 'none';
-
-    // Удаляем backdrop
-    const backdrop = document.querySelector('.modal-backdrop');
-    if (backdrop) {
-      backdrop.remove();
-    }
-  };
-
-  // Наполняем список новыми данными
   posts.forEach((post) => {
     const li = document.createElement('li');
-    li.className =
-      'posts-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
+    li.className = 'posts-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
 
     const a = document.createElement('a');
     a.href = post.link;
-    a.className = 'post-text fw-bold link-secondary';
+    // Используем либо .post-text, либо .text-muted в зависимости от состояния
+    a.className = clickedPosts.has(post.id) ? 'text-muted fw-normal link-secondary' : 'post-text fw-bold link-secondary';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
@@ -104,28 +56,24 @@ const renderPosts = (posts) => {
     ul.appendChild(li);
   });
 
-  // Функция смены стилей строки с ссылкой
-  const handlePostClick = (event) => {
-    const clickedElement = event.currentTarget;
-    const parentLi = clickedElement.closest('li'); // Находим родительский элемент <li>
-    const relatedLink = parentLi.querySelector('a.post-text'); // Находим связанную ссылку
+  document.querySelectorAll('.posts-group a.post-text, .posts-group button').forEach((element) => {
+    element.addEventListener('click', (event) => {
+      const clickedElement = event.currentTarget;
+      const parentLi = clickedElement.closest('li');
+      const relatedLink = parentLi.querySelector('a.post-text');
 
-    if (relatedLink) {
-      relatedLink.classList.replace('post-text', 'post-text-muted'); // Меняем классы ссылки
-      relatedLink.classList.replace('fw-bold', 'fw-normal');
-    }
-  };
+      if (relatedLink) {
+        clickedPosts.add(relatedLink.getAttribute('data-id'));
+        // Меняем класс на text-muted при клике
+        relatedLink.classList.replace('post-text', 'text-muted');
+        relatedLink.classList.replace('fw-bold', 'fw-normal');
+      }
+    });
+  });
 
-  document
-    .querySelectorAll('.posts-group a.post-text, .posts-group button')
-    .forEach((element) => element.addEventListener('click', handlePostClick));
+  // Закрытие модального окна и другие функции остаются без изменений
+  document.querySelectorAll('[data-bs-dismiss="modal"]').forEach((button) => button.addEventListener('click', closeModal));
 
-  // Добавляем обработчик для закрытия модального окна
-  document
-    .querySelectorAll('[data-bs-dismiss="modal"]')
-    .forEach((button) => button.addEventListener('click', closeModal));
-
-  // Закрытие при клике вне модального окна
   document.addEventListener('click', (event) => {
     const modalFade = document.querySelector('#modal');
     if (event.target === modalFade) {
@@ -133,12 +81,58 @@ const renderPosts = (posts) => {
     }
   });
 
-  // Закрытие по нажатию клавиши Escape
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       closeModal();
     }
   });
+};
+
+// Функция для открытия модального окна
+const openModal = (post) => {
+  const body = document.body;
+  const modalFade = document.querySelector('#modal');
+  const modalContent = modalFade.querySelector('.modal-content');
+  const modalTitle = modalContent.querySelector('.modal-title');
+  const modalBody = modalContent.querySelector('.modal-body');
+  const linkButton = modalContent.querySelector('.btn-primary');
+
+  body.classList.add('modal-open');
+  body.style.overflow = 'hidden';
+  body.style.paddingRight = '14px';
+
+  modalFade.classList.add('show');
+  modalFade.style.display = 'block';
+
+  modalTitle.textContent = post.title;
+  modalBody.textContent = post.description;
+  linkButton.href = post.link;
+
+  // Добавляем backdrop, если его еще нет
+  if (!document.querySelector('.modal-backdrop')) {
+    const backdrop = document.createElement('div');
+    backdrop.classList.add('modal-backdrop', 'fade', 'show');
+    document.body.appendChild(backdrop);
+  }
+};
+
+// Функция для закрытия модального окна
+const closeModal = () => {
+  const body = document.body;
+  const modalFade = document.querySelector('#modal');
+
+  body.classList.remove('modal-open');
+  body.style.overflow = '';
+  body.style.paddingRight = '';
+
+  modalFade.classList.remove('show');
+  modalFade.style.display = 'none';
+
+  // Удаляем backdrop
+  const backdrop = document.querySelector('.modal-backdrop');
+  if (backdrop) {
+    backdrop.remove();
+  }
 };
 
 export default renderPosts;
