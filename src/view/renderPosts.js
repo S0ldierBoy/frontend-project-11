@@ -83,7 +83,7 @@ const renderPosts = (posts) => {
 
     const a = document.createElement('a');
     a.href = post.link;
-    a.className = 'post-text fw-normal link-secondary';
+    a.className = 'post-text fw-bold link-secondary';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
@@ -112,6 +112,7 @@ const renderPosts = (posts) => {
 
     if (relatedLink) {
       relatedLink.classList.replace('post-text', 'post-text-muted'); // Меняем классы ссылки
+      relatedLink.classList.replace('fw-bold', 'fw-normal');
     }
   };
 
