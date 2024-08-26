@@ -1,4 +1,4 @@
-const renderFeed = (data) => {
+const renderFeed = (feeds) => {
   const mainDiv = document.querySelector('.feeds');
   let feedsContainer = mainDiv.querySelector('.card');
 
@@ -28,7 +28,7 @@ const renderFeed = (data) => {
     const ul = feedsContainer.querySelector('ul');
     ul.innerHTML = '';
 
-    data.forEach(({ title, description }) => {
+    feeds.forEach(({ title, description }) => {
       const li = document.createElement('li');
       li.className = 'feeds-group-item border-0 border-end-0';
 
