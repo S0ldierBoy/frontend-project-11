@@ -1,4 +1,3 @@
-//npx webpack serve
 import './styles.css';
 import i18n from 'i18next';
 import onChange from 'on-change';

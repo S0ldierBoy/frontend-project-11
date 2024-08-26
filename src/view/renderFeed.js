@@ -3,7 +3,7 @@ const renderFeed = (feeds) => {
   let feedsContainer = mainDiv.querySelector('.card');
 
   if (!feedsContainer) {
-    // Создаем новый контейнер, если его нет
+    // Создаем новый контейнер, если его нет.
     feedsContainer = document.createElement('div');
     feedsContainer.className = 'card border-0';
 
