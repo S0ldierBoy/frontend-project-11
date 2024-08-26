@@ -30,12 +30,15 @@ const renderPosts = (posts) => {
 
   posts.forEach((post) => {
     const li = document.createElement('li');
-    li.className = 'posts-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
+    li.className =
+      'posts-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
 
     const a = document.createElement('a');
     a.href = post.link;
     // Используем либо .post-text, либо .text-muted в зависимости от состояния
-    a.className = clickedPosts.has(post.id) ? 'text-muted fw-normal link-secondary' : 'post-text fw-bold link-secondary';
+    a.className = clickedPosts.has(post.id)
+      ? 'text-muted fw-normal link-secondary'
+      : 'post-text fw-bold link-secondary';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
@@ -56,23 +59,27 @@ const renderPosts = (posts) => {
     ul.appendChild(li);
   });
 
-  document.querySelectorAll('.posts-group a.post-text, .posts-group button').forEach((element) => {
-    element.addEventListener('click', (event) => {
-      const clickedElement = event.currentTarget;
-      const parentLi = clickedElement.closest('li');
-      const relatedLink = parentLi.querySelector('a.post-text');
+  document
+    .querySelectorAll('.posts-group a.post-text, .posts-group button')
+    .forEach((element) => {
+      element.addEventListener('click', (event) => {
+        const clickedElement = event.currentTarget;
+        const parentLi = clickedElement.closest('li');
+        const relatedLink = parentLi.querySelector('a.post-text');
 
-      if (relatedLink) {
-        clickedPosts.add(relatedLink.getAttribute('data-id'));
-        // Меняем класс на text-muted при клике
-        relatedLink.classList.replace('post-text', 'text-muted');
-        relatedLink.classList.replace('fw-bold', 'fw-normal');
-      }
+        if (relatedLink) {
+          clickedPosts.add(relatedLink.getAttribute('data-id'));
+          // Меняем класс на text-muted при клике
+          relatedLink.classList.replace('post-text', 'text-muted');
+          relatedLink.classList.replace('fw-bold', 'fw-normal');
+        }
+      });
     });
-  });
 
   // Закрытие модального окна и другие функции остаются без изменений
-  document.querySelectorAll('[data-bs-dismiss="modal"]').forEach((button) => button.addEventListener('click', closeModal));
+  document
+    .querySelectorAll('[data-bs-dismiss="modal"]')
+    .forEach((button) => button.addEventListener('click', closeModal));
 
   document.addEventListener('click', (event) => {
     const modalFade = document.querySelector('#modal');

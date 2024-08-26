@@ -5,9 +5,9 @@ import onChange from 'on-change';
 import validateUrl from './validator.js';
 import renderInput from './view/renderInput.js';
 import resources from './locales/index.js';
-import fetchRss from './utils.js';
 import domParser from './domParser.js';
 import feedView from './view/index.js';
+import { checkForUpdates, fetchRss } from './utils.js'; // Импортируем функцию
 
 const runApp = async () => {
   const i18nextInstance = i18n.createInstance();
@@ -72,37 +72,8 @@ const runApp = async () => {
       });
   });
 
-  // Функция для проверки обновлений RSS-потоков
-  const checkForUpdates = () => {
-    // Пробегаемся по каждому сохраненному URL и проверяем наличие новых постов
-    const updatePromises = state.urls.map((url) =>
-      fetchRss(url)
-        .then((data) => domParser(data.contents))
-        .then((parsedData) => {
-          const newPosts = parsedData.posts.filter(
-            (post) =>
-              !state.posts.some(
-                (existingPost) => existingPost.link === post.link
-              )
-          );
-
-          if (newPosts.length > 0) {
-            watchedState.posts.unshift(...newPosts);
-          }
-        })
-        .catch((error) => {
-          console.error(`Error fetching RSS feed from ${url}:`, error.message);
-        })
-    );
-
-    // Когда все запросы завершены, запускаем таймер для следующего цикла
-    Promise.all(updatePromises).finally(() => {
-      setTimeout(checkForUpdates, 5000); 
-    });
-  };
-
   // Запускаем начальную проверку после загрузки приложения
-  checkForUpdates();
+  checkForUpdates(state, watchedState); // Вызываем функцию из утилит
 };
 
 runApp();
