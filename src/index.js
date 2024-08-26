@@ -6,7 +6,7 @@ import renderInput from './view/renderInput.js';
 import resources from './locales/index.js';
 import domParser from './domParser.js';
 import feedView from './view/index.js';
-import { checkForUpdates, fetchRss } from './utils.js'; // Импортируем функцию
+import { checkForUpdates, fetchRss } from './utils.js';
 
 const runApp = async () => {
   const i18nextInstance = i18n.createInstance();
