@@ -97,7 +97,7 @@ const runApp = async () => {
 
     // Когда все запросы завершены, запускаем таймер для следующего цикла
     Promise.all(updatePromises).finally(() => {
-      setTimeout(checkForUpdates, 5000); // 300000 ms = 5 минут
+      setTimeout(checkForUpdates, 5000); 
     });
   };
 
