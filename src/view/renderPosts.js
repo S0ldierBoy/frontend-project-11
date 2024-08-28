@@ -94,3 +94,5 @@ const renderPosts = (posts) => {
     }
   });
 };
+
+export default renderPosts;
