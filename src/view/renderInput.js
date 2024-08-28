@@ -7,7 +7,10 @@ const renderDefault = (elements) => {
 const renderError = (elements, error, i18n) => {
   const { input, feedback } = elements;
   input.classList.add('is-invalid');
-  feedback.textContent = i18n.t(error);
+  const errorMessage = error.code
+    ? i18n.t(`errors.${error.code}`)
+    : error.message;
+  feedback.textContent = errorMessage;
   feedback.classList.remove('text-success');
   feedback.classList.add('text-danger');
 };

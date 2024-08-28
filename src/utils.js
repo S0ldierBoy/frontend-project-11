@@ -1,21 +1,22 @@
 import axios from 'axios';
 import domParser from './domParser.js';
 
-const fetchRss = (url, watchedState) => {
+const fetchRss = (url) => {
   return axios
     .get(
-      `https://allorigins.hexlet.app/get?url=${encodeURIComponent(
-        url
-      )}&disableCache=true`
+      `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`
     )
     .then((response) => response.data)
     .catch((error) => {
       if (error.response || error.request) {
-        watchedState.error = 'errors.netError2';
-        throw new Error('Ошибка сервера. Проверьте URL или подключение.');
+        // Ошибка сервера, например 404 или 500
+        throw {
+          code: 'netError2',
+          message: 'Ошибка сервера: ' + error.message,
+        };
       } else {
-        watchedState.error = 'errors.netError1';
-        throw new Error('Ошибка сети. Проверьте ваше интернет-соединение.');
+        // Ошибка сети
+        throw { code: 'netError1', message: 'Ошибка сети: ' + error.message };
       }
     });
 };
@@ -35,7 +36,7 @@ const checkForUpdates = (state, watchedState) => {
         }
       })
       .catch((error) => {
-        console.error('errors.netError1');
+        console.error(`Error fetching RSS feed from ${url}:`, error.message);
       })
   );
 

@@ -49,7 +49,7 @@ const runApp = async () => {
     const formData = new FormData(e.target);
     const url = formData.get('url').trim();
 
-    validateUrl(url, state)
+    validateUrl(url, state, i18nextInstance)
       .then(() => {
         watchedState.subButton = true;
         watchedState.error = null; // Сбрасываем ошибку
@@ -66,7 +66,7 @@ const runApp = async () => {
         elements.input.focus();
       })
       .catch((error) => {
-        watchedState.error = error.message; // Записываем текст ошибки для отображения
+        watchedState.error = error; // Передаем объект ошибки для корректного отображения
         watchedState.subButton = false;
       });
   });
