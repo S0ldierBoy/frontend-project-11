@@ -35,10 +35,8 @@ const renderPosts = (posts) => {
 
     const a = document.createElement('a');
     a.href = post.link;
-    // Используем либо .post-text, либо .text-muted в зависимости от состояния
-    a.className = clickedPosts.has(post.id)
-      ? 'text-muted fw-normal link-secondary'
-      : 'post-text fw-bold link-secondary';
+    // Используем только классы fw-bold или fw-normal
+    a.className = clickedPosts.has(post.id) ? 'fw-normal' : 'fw-bold';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
@@ -60,23 +58,22 @@ const renderPosts = (posts) => {
   });
 
   document
-    .querySelectorAll('.list-group a.post-text, .list-group button')
+    .querySelectorAll('.list-group a.fw-bold, .list-group button')
     .forEach((element) => {
       element.addEventListener('click', (event) => {
         const clickedElement = event.currentTarget;
         const parentLi = clickedElement.closest('li');
-        const relatedLink = parentLi.querySelector('a.post-text');
+        const relatedLink = parentLi.querySelector('a.fw-bold, a.fw-normal');
 
         if (relatedLink) {
           clickedPosts.add(relatedLink.getAttribute('data-id'));
-          // Меняем класс на text-muted при клике
-          relatedLink.classList.replace('post-text', 'text-muted');
+          // Меняем класс на fw-normal при клике
           relatedLink.classList.replace('fw-bold', 'fw-normal');
         }
       });
     });
 
-  // Закрытие модального окна и другие функции остаются без изменений
+  // Функции модальных окон остаются неизменными
   document
     .querySelectorAll('[data-bs-dismiss="modal"]')
     .forEach((button) => button.addEventListener('click', closeModal));

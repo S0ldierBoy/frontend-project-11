@@ -6,3 +6,21 @@ $muted-color: #6c757d !important;
 .text-muted {
   color: $muted-color;
 }
+
+// Стили по умолчанию для всех ссылок
+// Стили для ссылок
+a {
+  text-decoration: none;
+
+  &.fw-bold {
+    color: blue; // Активный цвет ссылки
+  }
+
+  &.fw-normal {
+    color: gray; // Цвет для кликнутых ссылок
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
