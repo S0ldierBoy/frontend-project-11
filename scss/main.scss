@@ -1,14 +1,8 @@
 @import '../node_modules/bootstrap/scss/bootstrap';
 
-//$primary-color: rgb(0, 76, 255) !important;
 $muted-color: #6c757d !important;
-//$gap-size: 15px;
 
 // Классы для управления цветами текста
 .text-muted {
   color: $muted-color;
 }
-
-// .post-text {
-//   color: $primary-color;
-// }

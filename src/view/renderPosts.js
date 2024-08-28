@@ -17,7 +17,7 @@ const renderPosts = (posts) => {
 
     const ul = document.createElement('ul');
     ul.className = 'list-group border-0 rounded-0';
-    //posts-group
+
     cardBodyDiv.appendChild(h2);
     cardDiv.appendChild(cardBodyDiv);
     cardDiv.appendChild(ul);
@@ -36,7 +36,9 @@ const renderPosts = (posts) => {
     const a = document.createElement('a');
     a.href = post.link;
     // Используем либо .post-text, либо .text-muted в зависимости от состояния
-    a.className = clickedPosts.has(post.id) ? 'fw-normal' : 'fw-bold';
+    a.className = clickedPosts.has(post.id)
+      ? 'text-muted fw-normal link-secondary'
+      : 'post-text fw-bold link-secondary';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
@@ -65,13 +67,11 @@ const renderPosts = (posts) => {
         const parentLi = clickedElement.closest('li');
         const relatedLink = parentLi.querySelector('a.post-text');
 
-        if (
-          relatedLink &&
-          !clickedPosts.has(relatedLink.getAttribute('data-id'))
-        ) {
+        if (relatedLink) {
           clickedPosts.add(relatedLink.getAttribute('data-id'));
+          // Меняем класс на text-muted при клике
+          relatedLink.classList.replace('post-text', 'text-muted');
           relatedLink.classList.replace('fw-bold', 'fw-normal');
-          //relatedLink.classList.replace('post-text', 'text-muted');
         }
       });
     });
