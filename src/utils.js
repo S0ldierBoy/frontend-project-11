@@ -31,7 +31,7 @@ const checkForUpdates = (state, watchedState) => {
         }
       })
       .catch((error) => {
-        console.error(`Error fetching RSS feed from ${url}:`, error.message);
+        console.error('errors.netError1');
       })
   );
 
