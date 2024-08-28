@@ -15,7 +15,7 @@ RSS-агрегатор — это веб-приложение, которое п
 
 Вы можете попробовать живую демонстрацию RSS-агрегатора на Vercel:
 
-[Демо RSS-агрегатора](https://frontend-project-11-wy8h.vercel.app/)
+[Демо RSS-агрегатора](https://frontend-project-11-one-omega.vercel.app/)
 
 ### Установка:
 
