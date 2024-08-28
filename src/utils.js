@@ -11,11 +11,11 @@ const fetchRss = (url, watchedState) => {
     .then((response) => response.data)
     .catch((error) => {
       if (error.response || error.request) {
-        watchedState.error = 'Ошибка сервера. Проверьте URL или подключение.';
-        throw new Error('errors.netError2');
+        watchedState.error = 'errors.netError2';
+        throw new Error('Ошибка сервера. Проверьте URL или подключение.');
       } else {
-        watchedState.error = 'Ошибка сети. Проверьте ваше интернет-соединение.';
-        throw new Error('errors.netError1');
+        watchedState.error = 'errors.netError1';
+        throw new Error('Ошибка сети. Проверьте ваше интернет-соединение.');
       }
     });
 };
