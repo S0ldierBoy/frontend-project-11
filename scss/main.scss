@@ -2,13 +2,10 @@
 
 $muted-color: #6c757d !important;
 
-// Классы для управления цветами текста
 .text-muted {
   color: $muted-color;
 }
 
-// Стили по умолчанию для всех ссылок
-// Стили для ссылок
 a {
   text-decoration: none;
 
@@ -17,7 +14,7 @@ a {
   }
 
   &.fw-normal {
-    color: gray; // Цвет для кликнутых ссылок
+    color: $muted-color; // Цвет для кликнутых ссылок
   }
 
   &:hover {
