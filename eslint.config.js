@@ -1,6 +1,5 @@
 import globals from 'globals';
 import pluginJs from '@eslint/js';
-//import { rule } from 'postcss';
 
 export default [
   {

@@ -1,8 +1,8 @@
 import axios from 'axios';
 import domParser from './domParser.js';
 
-const fetchRss = (url) => {
-  return axios
+const fetchRss = (url) =>
+  axios
     .get(
       `https://allorigins.hexlet.app/get?url=${encodeURIComponent(
         url
@@ -19,7 +19,6 @@ const fetchRss = (url) => {
         throw new Error('errors.netError2'); // Ошибка запроса
       }
     });
-};
 
 const checkForUpdates = (state, watchedState) => {
   const updatePromises = state.urls.map((url) =>
