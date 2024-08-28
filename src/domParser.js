@@ -23,9 +23,7 @@ const domParser = (data) => {
       const channels = xmlDoc.querySelectorAll('channel');
 
       if (!rss) {
-        // Пробрасываем объект ошибки с кодом для обработки
-        reject(new Error('errors.err2')); // Ошибка при отсутствии RSS
-        return;
+        throw new Error('errors.err2');
       }
 
       const getFeed = Array.from(channels).map(parseChannel);

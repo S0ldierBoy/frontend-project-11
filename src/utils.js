@@ -4,19 +4,19 @@ import domParser from './domParser.js';
 const fetchRss = (url) => {
   return axios
     .get(
-      `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`
+      `https://allorigins.hexlet.app/get?url=${encodeURIComponent(
+        url
+      )}&disableCache=true`,
+      {
+        timeout: 10000, // Устанавливаем таймаут на 5 секунд
+      }
     )
     .then((response) => response.data)
     .catch((error) => {
       if (error.response || error.request) {
-        // Ошибка сервера, например 404 или 500
-        throw {
-          code: 'netError2',
-          message: 'Ошибка сервера: ' + error.message,
-        };
+        throw new Error('errors.netError2'); // Ошибка сервера,  например 404 или 500
       } else {
-        // Ошибка сети
-        throw { code: 'netError1', message: 'Ошибка сети: ' + error.message };
+        throw new Error('errors.netError1'); // Ошибка запроса
       }
     });
 };
