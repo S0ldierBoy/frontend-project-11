@@ -1,5 +1,8 @@
 const clickedPosts = new Set();
 
+// Expected string: "fw-bold"
+// app-1  |     Received string: "post-text fw-bold link-secondary"
+
 const renderPosts = (posts) => {
   const mainDiv = document.querySelector('.posts');
   let cardDiv = mainDiv.querySelector('.card');
@@ -36,9 +39,7 @@ const renderPosts = (posts) => {
     const a = document.createElement('a');
     a.href = post.link;
     // Используем либо .post-text, либо .text-muted в зависимости от состояния
-    a.className = clickedPosts.has(post.id)
-      ? 'text-muted fw-normal link-secondary'
-      : 'post-text fw-bold link-secondary';
+    a.className = clickedPosts.has(post.id) ? 'fw-normal ' : 'fw-bold ';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
