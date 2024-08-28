@@ -1,3 +1,5 @@
+const clickedPosts = new Set();
+
 const renderPosts = (posts) => {
   const mainDiv = document.querySelector('.posts');
   let cardDiv = mainDiv.querySelector('.card');
@@ -65,10 +67,7 @@ const renderPosts = (posts) => {
         const parentLi = clickedElement.closest('li');
         const relatedLink = parentLi.querySelector('a.post-text');
 
-        if (
-          relatedLink &&
-          !clickedPosts.has(relatedLink.getAttribute('data-id'))
-        ) {
+        if (relatedLink && !clickedPosts.has(relatedLink.getAttribute('data-id'))) {
           clickedPosts.add(relatedLink.getAttribute('data-id'));
           relatedLink.classList.replace('fw-bold', 'fw-normal');
           relatedLink.classList.replace('post-text', 'text-muted');
@@ -77,9 +76,9 @@ const renderPosts = (posts) => {
     });
 
   // Закрытие модального окна и другие функции остаются без изменений
-  document.querySelectorAll('[data-bs-dismiss="modal"]').forEach((button) => {
-    button.addEventListener('click', closeModal);
-  });
+  document
+    .querySelectorAll('[data-bs-dismiss="modal"]')
+    .forEach((button) => button.addEventListener('click', closeModal));
 
   document.addEventListener('click', (event) => {
     const modalFade = document.querySelector('#modal');
@@ -93,6 +92,53 @@ const renderPosts = (posts) => {
       closeModal();
     }
   });
+};
+
+// Функция для открытия модального окна
+const openModal = (post) => {
+  const body = document.body;
+  const modalFade = document.querySelector('#modal');
+  const modalContent = modalFade.querySelector('.modal-content');
+  const modalTitle = modalContent.querySelector('.modal-title');
+  const modalBody = modalContent.querySelector('.modal-body');
+  const linkButton = modalContent.querySelector('.btn-primary');
+
+  body.classList.add('modal-open');
+  body.style.overflow = 'hidden';
+  body.style.paddingRight = '14px';
+
+  modalFade.classList.add('show');
+  modalFade.style.display = 'block';
+
+  modalTitle.textContent = post.title;
+  modalBody.textContent = post.description;
+  linkButton.href = post.link;
+
+  // Добавляем backdrop, если его еще нет
+  if (!document.querySelector('.modal-backdrop')) {
+    const backdrop = document.createElement('div');
+    backdrop.classList.add('modal-backdrop', 'fade', 'show');
+    document.body.appendChild(backdrop);
+  }
+};
+
+// Функция для закрытия модального окна
+const closeModal = () => {
+  const body = document.body;
+  const modalFade = document.querySelector('#modal');
+
+  body.classList.remove('modal-open');
+  body.style.overflow = '';
+  body.style.paddingRight = '';
+
+  modalFade.classList.remove('show');
+  modalFade.style.display = 'none';
+
+  // Удаляем backdrop
+  const backdrop = document.querySelector('.modal-backdrop');
+  if (backdrop) {
+    backdrop.remove();
+  }
 };
 
 export default renderPosts;
