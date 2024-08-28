@@ -39,7 +39,9 @@ const renderPosts = (posts) => {
     const a = document.createElement('a');
     a.href = post.link;
     // Используем либо .post-text, либо .text-muted в зависимости от состояния
-    a.className = clickedPosts.has(post.id) ? 'fw-normal' : 'fw-bold';
+    a.className = clickedPosts.has(post.id)
+      ? 'text-muted  link-secondary'
+      : 'post-text fw-bold link-secondary';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
