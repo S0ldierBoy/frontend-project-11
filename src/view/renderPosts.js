@@ -74,7 +74,7 @@ const renderPosts = (posts) => {
           clickedPosts.add(relatedLink.getAttribute('data-id'));
           // Меняем класс на text-muted при клике
           relatedLink.classList.replace('post-text', 'text-muted');
-          relatedLink.classList.replace('fw-bold', 'fw-normal');
+          relatedLink.classList.replace('fw-bold', '');
         }
       });
     });
