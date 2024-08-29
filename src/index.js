@@ -30,12 +30,10 @@ function runApp() {
         error: null,
         feeds: [],
         posts: [],
-        subButton: false,
       };
 
       const watchedState = onChange(state, (path) => {
-        elements.submitButton.disabled = state.subButton;
-        console.log(state);
+        //console.log(state.feeds);
         switch (path) {
           case 'feeds':
           case 'posts':
@@ -53,7 +51,7 @@ function runApp() {
 
         validateUrl(url, state)
           .then(() => {
-            watchedState.subButton = true;
+            elements.submitButton.disabled = true;
             watchedState.error = null; // Сбрасываем ошибку
             return fetchRss(url);
           })
@@ -61,16 +59,17 @@ function runApp() {
           .then((dataWithoutId) => assignIdsToPosts(dataWithoutId))
           .then((parsedData) => {
             watchedState.urls.unshift(url); // Добавляем URL
+            //watchedState.feeds.unshift(url);
             watchedState.feeds.unshift(...parsedData.feed);
             watchedState.posts.unshift(...parsedData.posts);
-            watchedState.subButton = false;
 
+            elements.submitButton.disabled = false;
             e.target.reset();
             elements.input.focus();
           })
           .catch((error) => {
             watchedState.error = error.message; // Записываем текст ошибки для отображения
-            watchedState.subButton = false;
+            elements.submitButton.disabled = false;
           });
       });
 
