@@ -6,7 +6,7 @@ import renderInput from './view/renderInput.js';
 import resources from './locales/index.js';
 import domParser from './domParser.js';
 import feedView from './view/index.js';
-import { checkForUpdates, fetchRss } from './utils.js';
+import { checkForUpdates, fetchRss, assignIdsToPosts } from './utils.js';
 
 function runApp() {
   const i18nextInstance = i18n.createInstance();
@@ -35,7 +35,7 @@ function runApp() {
 
       const watchedState = onChange(state, (path) => {
         elements.submitButton.disabled = state.subButton;
-
+        console.log(state);
         switch (path) {
           case 'feeds':
           case 'posts':
@@ -58,6 +58,7 @@ function runApp() {
             return fetchRss(url);
           })
           .then((data) => domParser(data.contents))
+          .then((datas) => assignIdsToPosts(datas))
           .then((parsedData) => {
             watchedState.urls.unshift(url); // Добавляем URL
             watchedState.feeds.unshift(...parsedData.feed);
@@ -78,7 +79,7 @@ function runApp() {
     })
     .catch((error) => {
       console.error('Ошибка инициализации i18', error);
-    }); // Вызываем функцию из утилит
+    });
 }
 
 runApp();

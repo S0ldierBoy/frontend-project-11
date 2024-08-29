@@ -1,11 +1,23 @@
 import axios from 'axios';
 import domParser from './domParser.js';
 
+const assignIdsToPosts = (data) => {
+  const postsWithIds = data.posts.map((post) => ({
+    ...post,
+    id: `post-${post.link}`, // создаем уникальный id на основе ссылки
+  }));
+
+  return { ...data, posts: postsWithIds };
+};
+
 const fetchRss = (url) =>
   axios
-    .get(`https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`, {
-      timeout: 10000,
-    })
+    .get(
+      `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,
+      {
+        timeout: 10000,
+      }
+    )
     .then((response) => response.data)
     .catch((error) => {
       if (error.response || error.request) {
@@ -20,9 +32,10 @@ const checkForUpdates = (state, watchedState) => {
     fetchRss(url)
       .then((data) => domParser(data.contents))
       .then((parsedData) => {
-        const newPosts = parsedData.posts.filter((post) => !state.posts.some(
-          (existingPost) => existingPost.link === post.link,
-        ));
+        const newPosts = parsedData.posts.filter(
+          (post) =>
+            !state.posts.some((existingPost) => existingPost.link === post.link)
+        );
 
         if (newPosts.length > 0) {
           watchedState.posts.unshift(...newPosts);
@@ -30,7 +43,7 @@ const checkForUpdates = (state, watchedState) => {
       })
       .catch((error) => {
         console.error(`Error fetching RSS feed from ${url}:`, error.message);
-      }),
+      })
   );
 
   Promise.all(updatePromises).finally(() => {
@@ -38,4 +51,4 @@ const checkForUpdates = (state, watchedState) => {
   });
 };
 
-export { fetchRss, checkForUpdates };
+export { fetchRss, checkForUpdates, assignIdsToPosts };
