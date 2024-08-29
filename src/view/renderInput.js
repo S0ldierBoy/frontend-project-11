@@ -25,7 +25,7 @@ const renderInput = (elements, state, i18n) => {
 
   if (error) {
     renderError(elements, error, i18n);
-  } else if (state.urls.length > 0) {
+  } else if (state.load === 'process') {
     renderSuccess(elements, i18n);
   } else {
     renderDefault(elements);

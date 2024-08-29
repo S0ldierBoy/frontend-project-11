@@ -30,6 +30,7 @@ function runApp() {
         error: null,
         feeds: [],
         posts: [],
+        load: null,
       };
 
       const watchedState = onChange(state, (path) => {
@@ -53,6 +54,7 @@ function runApp() {
           .then(() => {
             elements.submitButton.disabled = true;
             watchedState.error = null; // Сбрасываем ошибку
+
             return fetchRss(url);
           })
           .then((data) => domParser(data.contents))
@@ -62,12 +64,14 @@ function runApp() {
             watchedState.posts.unshift(...parsedData.posts);
 
             elements.submitButton.disabled = false;
+            watchedState.load = 'process';
             e.target.reset();
             elements.input.focus();
           })
           .catch((error) => {
             watchedState.error = error.message; // Записываем текст ошибки для отображения
             elements.submitButton.disabled = false;
+            watchedState.load = 'error';
           });
       });
 
