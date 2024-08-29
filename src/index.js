@@ -56,10 +56,10 @@ function runApp() {
             return fetchRss(url);
           })
           .then((data) => domParser(data.contents))
-          .then((dataWithoutId) => assignIdsToPosts(dataWithoutId))
+          .then((dataWithoutId) => assignIdsToPosts(dataWithoutId, url))
           .then((parsedData) => {
             watchedState.urls.unshift(url); // Добавляем URL
-            //watchedState.feeds.unshift(url);
+
             watchedState.feeds.unshift(...parsedData.feed);
             watchedState.posts.unshift(...parsedData.posts);
 

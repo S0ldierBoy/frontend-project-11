@@ -1,13 +1,17 @@
 import axios from 'axios';
 import domParser from './domParser.js';
 
-const assignIdsToPosts = (data) => {
+const assignIdsToPosts = (data, url) => {
+  // Добавляем URL к каждому фиду
+  const feedWithUrl = data.feed.map((feed) => ({ ...feed, url: url }));
+
+  // создаем уникальный id на основе ссылки
   const postsWithIds = data.posts.map((post) => ({
     ...post,
-    id: `post-${post.link}`, // создаем уникальный id на основе ссылки
+    id: `post-${post.link}`,
   }));
 
-  return { ...data, posts: postsWithIds };
+  return { feed: feedWithUrl, posts: postsWithIds };
 };
 
 const fetchRss = (url) =>
