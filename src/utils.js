@@ -32,8 +32,8 @@ const fetchRss = (url) =>
     });
 
 const checkForUpdates = (state, watchedState) => {
-  const updatePromises = state.urls.map((url) =>
-    fetchRss(url)
+  const updatePromises = Object.values(state.feeds).map((feed) =>
+    fetchRss(feed.url)
       .then((data) => domParser(data.contents))
       .then((parsedData) => {
         const newPosts = parsedData.posts.filter(
@@ -54,5 +54,29 @@ const checkForUpdates = (state, watchedState) => {
     setTimeout(() => checkForUpdates(state, watchedState), 5000);
   });
 };
+
+// const checkForUpdates = (state, watchedState) => {
+//   const updatePromises = state.urls.map((url) =>
+//     fetchRss(url)
+//       .then((data) => domParser(data.contents))
+//       .then((parsedData) => {
+//         const newPosts = parsedData.posts.filter(
+//           (post) =>
+//             !state.posts.some((existingPost) => existingPost.link === post.link)
+//         );
+
+//         if (newPosts.length > 0) {
+//           watchedState.posts.unshift(...newPosts);
+//         }
+//       })
+//       .catch((error) => {
+//         console.error(`Error fetching RSS feed from ${url}:`, error.message);
+//       })
+//   );
+
+//   Promise.all(updatePromises).finally(() => {
+//     setTimeout(() => checkForUpdates(state, watchedState), 5000);
+//   });
+// };
 
 export { fetchRss, checkForUpdates, assignIdsToPosts };
