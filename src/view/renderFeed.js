@@ -1,5 +1,4 @@
 const renderFeed = (feeds) => {
-  console.log(feeds)
   const mainDiv = document.querySelector('.feeds');
   let feedsContainer = mainDiv.querySelector('.card');
 
