@@ -32,6 +32,7 @@ function runApp() {
       };
 
       const watchedState = onChange(state, (path) => {
+        console.log(state);
         switch (path) {
           case 'feeds':
           case 'posts':
@@ -56,9 +57,8 @@ function runApp() {
           .then((data) => domParser(data.contents, url)) // +
 
           .then((dataWithoutId) => assignIdsToPosts(dataWithoutId, url)) // +
-          .then((datas) => console.log(datas))
           .then((parsedData) => {
-            watchedState.feeds[url] = parsedData.feed;
+            watchedState.feeds[parsedData.id] = parsedData; // + стейт копит фиды по отдельности фид1 = {}
 
             elements.submitButton.disabled = false;
             watchedState.load = 'process';
@@ -73,7 +73,7 @@ function runApp() {
       });
 
       // Запускаем начальную проверку после загрузки приложения
-      checkForUpdates(state, watchedState);
+      //checkForUpdates(state, watchedState);
     })
     .catch((error) => {
       console.error('Ошибка инициализации i18', error);
@@ -81,3 +81,19 @@ function runApp() {
 }
 
 runApp();
+
+const test = {
+  title: 'Lorem ipsum feed for an interval of 1 minutes with 10 item(s)',
+  description: 'This is a constantly updating lorem ipsum feed',
+  posts: [
+    {
+      title: 'Lorem ipsum 2024-08-30T18:03:00Z',
+      link: 'http://example.com/test/1725040980',
+      description:
+        'Lorem elit velit ex eu voluptate in ullamco quis non anim cillum excepteur aute.',
+      id: 'http://example.com/test/1725040980',
+    },
+  ],
+  id: 'feed-1',
+  url: 'https://lorem-rss.hexlet.app/feed',
+};
