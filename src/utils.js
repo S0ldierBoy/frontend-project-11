@@ -41,13 +41,20 @@ const checkForUpdates = (state, watchedState) => {
     fetchRss(feed.url)
       .then((data) => domParser(data.contents))
       .then((parsedData) => {
+        // Проверяем новые посты, которых нет в текущем фиде
         const newPosts = parsedData.posts.filter(
           (post) =>
-            !state.posts.some((existingPost) => existingPost.link === post.link)
+            !feed.posts.some((existingPost) => existingPost.link === post.link)
         );
 
         if (newPosts.length > 0) {
-          watchedState.posts.unshift(...newPosts);
+          // Добавляем новые посты в начало массива
+          const updatedFeed = {
+            ...feed,
+            posts: [...newPosts, ...feed.posts], // Добавляем новые посты в начало
+          };
+          // Обновляем фид в watchedState
+          watchedState.feeds[feed.id] = updatedFeed;
         }
       })
       .catch((error) => {
@@ -64,15 +71,3 @@ const checkForUpdates = (state, watchedState) => {
 };
 
 export { fetchRss, checkForUpdates, assignIdsToPosts };
-
-const data1 = {
-  title: 'Lorem ipsum feed for an interval of 1 minutes with 10 item(s)',
-  description: 'This is a constantly updating lorem ipsum feed',
-  posts: [
-    {
-      title: 'Lorem ipsum 2024-08-30T17:16:00Z',
-      link: 'http://example.com/test/1725038160',
-      description: 'Aute do voluptate elit exercitation occaecat elit et.',
-    },
-  ],
-};

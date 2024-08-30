@@ -73,7 +73,7 @@ function runApp() {
       });
 
       // Запускаем начальную проверку после загрузки приложения
-      //checkForUpdates(state, watchedState);
+      checkForUpdates(state, watchedState);
     })
     .catch((error) => {
       console.error('Ошибка инициализации i18', error);
@@ -82,7 +82,7 @@ function runApp() {
 
 runApp();
 
-const test = {
+const feed = {
   title: 'Lorem ipsum feed for an interval of 1 minutes with 10 item(s)',
   description: 'This is a constantly updating lorem ipsum feed',
   posts: [
