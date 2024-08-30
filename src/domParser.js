@@ -22,8 +22,9 @@ const domParser = (data) => {
       }
 
       const rss = xmlDoc.querySelector('rss');
+
       if (!rss) {
-        throw new Error('errors.unknownError');
+        throw new Error('Неизвестная ошибка. Что-то пошло не так.');
       }
 
       const items = xmlDoc.querySelectorAll('item');
