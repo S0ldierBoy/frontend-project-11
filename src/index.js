@@ -26,11 +26,9 @@ function runApp() {
       };
 
       const state = {
-        urls: [],
-        error: null,
-        feeds: [],
-        posts: [],
-        load: null,
+        feeds: {}, // Пустой объект, который будет заполняться фидами, каждый фид будет объектом
+        error: null, // Ошибка изначально отсутствует
+        load: null, // Состояние загрузки изначально неопределено
       };
 
       const watchedState = onChange(state, (path) => {
@@ -47,20 +45,20 @@ function runApp() {
       elements.form.addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const url = formData.get('url').trim();
+        const url = formData.get('url').trim(); // +
 
-        validateUrl(url, state)
+        validateUrl(url, state) // +
           .then(() => {
             elements.submitButton.disabled = true;
-            watchedState.error = null; // Сбрасываем ошибку
-
+            watchedState.error = null;
             return fetchRss(url);
           })
-          .then((data) => domParser(data.contents))
-          .then((dataWithoutId) => assignIdsToPosts(dataWithoutId, url))
+          .then((data) => domParser(data.contents, url)) // +
+
+          .then((dataWithoutId) => assignIdsToPosts(dataWithoutId, url)) // +
+          .then((datas) => console.log(datas))
           .then((parsedData) => {
-            watchedState.feeds.unshift(...parsedData.feed);
-            watchedState.posts.unshift(...parsedData.posts);
+            watchedState.feeds[url] = parsedData.feed;
 
             elements.submitButton.disabled = false;
             watchedState.load = 'process';

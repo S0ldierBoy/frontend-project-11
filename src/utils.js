@@ -1,17 +1,22 @@
 import axios from 'axios';
 import domParser from './domParser.js';
+import _ from 'lodash';
 
 const assignIdsToPosts = (data, url) => {
-  // Добавляем URL к каждому фиду
-  const feedWithUrl = data.feed.map((feed) => ({ ...feed, url: url }));
-
-  // создаем уникальный id на основе ссылки
-  const postsWithIds = data.posts.map((post) => ({
+  // Используем link как id для постов
+  const postsWithLinks = data.posts.map((post) => ({
     ...post,
-    id: `post-${post.link}`,
+    id: post.link,
   }));
 
-  return { feed: feedWithUrl, posts: postsWithIds };
+  const feedWithUrl = {
+    ...data,
+    id: _.uniqueId('feed-'),
+    url: url,
+    posts: postsWithLinks,
+  };
+
+  return feedWithUrl;
 };
 
 const fetchRss = (url) =>
@@ -22,7 +27,7 @@ const fetchRss = (url) =>
         timeout: 10000,
       }
     )
-    .then((response) => response.data)
+    .then((response) => response.data) // Получаем документ
     .catch((error) => {
       if (error.response || error.request) {
         throw new Error('errors.netError1'); // Ошибка сервера, например 404 или 500
@@ -59,3 +64,15 @@ const checkForUpdates = (state, watchedState) => {
 };
 
 export { fetchRss, checkForUpdates, assignIdsToPosts };
+
+const data1 = {
+  title: 'Lorem ipsum feed for an interval of 1 minutes with 10 item(s)',
+  description: 'This is a constantly updating lorem ipsum feed',
+  posts: [
+    {
+      title: 'Lorem ipsum 2024-08-30T17:16:00Z',
+      link: 'http://example.com/test/1725038160',
+      description: 'Aute do voluptate elit exercitation occaecat elit et.',
+    },
+  ],
+};
