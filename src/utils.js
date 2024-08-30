@@ -2,10 +2,7 @@ import axios from 'axios';
 import domParser from './domParser.js';
 
 const assignIdsToPosts = (data, url) => {
-  // Добавляем URL к каждому фиду
   const feedWithUrl = data.feed.map((feed) => ({ ...feed, url: url }));
-
-  // создаем уникальный id на основе ссылки
   const postsWithIds = data.posts.map((post) => ({
     ...post,
     id: `post-${post.link}`,
@@ -25,9 +22,9 @@ const fetchRss = (url) =>
     .then((response) => response.data)
     .catch((error) => {
       if (error.response || error.request) {
-        throw new Error('errors.netError1'); // Ошибка сервера, например 404 или 500
+        throw new Error('errors.netError1');
       } else {
-        throw new Error('errors.netError2'); // Ошибка запроса
+        throw new Error('errors.netError2');
       }
     });
 

@@ -34,7 +34,6 @@ function runApp() {
       };
 
       const watchedState = onChange(state, (path) => {
-        console.log(state.feeds);
         switch (path) {
           case 'feeds':
           case 'posts':
@@ -50,10 +49,15 @@ function runApp() {
         const formData = new FormData(e.target);
         const url = formData.get('url').trim();
 
+        if (state.urls.includes(url)) {
+          watchedState.error = 'errors.duplicate';
+          return;
+        }
+
         validateUrl(url, state)
           .then(() => {
             elements.submitButton.disabled = true;
-            watchedState.error = null; // Сбрасываем ошибку
+            watchedState.error = null;
 
             return fetchRss(url);
           })
@@ -62,6 +66,7 @@ function runApp() {
           .then((parsedData) => {
             watchedState.feeds.unshift(...parsedData.feed);
             watchedState.posts.unshift(...parsedData.posts);
+            state.urls.push(url);
 
             elements.submitButton.disabled = false;
             watchedState.load = 'process';
@@ -69,17 +74,16 @@ function runApp() {
             elements.input.focus();
           })
           .catch((error) => {
-            watchedState.error = error.message; // Записываем текст ошибки для отображения
+            watchedState.error = error.message;
             elements.submitButton.disabled = false;
             watchedState.load = 'error';
           });
       });
 
-      // Запускаем начальную проверку после загрузки приложения
       checkForUpdates(state, watchedState);
     })
     .catch((error) => {
-      console.error('Ошибка инициализации i18', error);
+      console.error('Ошибка инициализации i18n', error);
     });
 }
 

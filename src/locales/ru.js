@@ -7,6 +7,7 @@ const resources = {
         duplicate: 'RSS уже существует',
         netError1: 'Ошибка сети',
         netError2: 'Ошибка сервера',
+        unknownError: 'Неизвестная ошибка. Что-то пошло не так.',
       },
       successful: {
         success1: 'RSS успешно загружен',
@@ -14,4 +15,5 @@ const resources = {
     },
   },
 };
+
 export default resources;
