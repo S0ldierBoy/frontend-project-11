@@ -82,18 +82,3 @@ function runApp() {
 
 runApp();
 
-const feed = {
-  title: 'Lorem ipsum feed for an interval of 1 minutes with 10 item(s)',
-  description: 'This is a constantly updating lorem ipsum feed',
-  posts: [
-    {
-      title: 'Lorem ipsum 2024-08-30T18:03:00Z',
-      link: 'http://example.com/test/1725040980',
-      description:
-        'Lorem elit velit ex eu voluptate in ullamco quis non anim cillum excepteur aute.',
-      id: 'http://example.com/test/1725040980',
-    },
-  ],
-  id: 'feed-1',
-  url: 'https://lorem-rss.hexlet.app/feed',
-};

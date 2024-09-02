@@ -2,14 +2,21 @@ import * as yup from 'yup';
 
 // Создаем схему валидации для URL
 const createSchema = (existingUrls) =>
-  yup.string().url('errors.err1').notOneOf(existingUrls, 'errors.duplicate');
+  yup.object().shape({
+    url: yup
+      .string()
+      .url('errors.err1') // Проверка на валидный URL
+      .notOneOf(existingUrls, 'errors.duplicate'), // Проверка на уникальность URL
+  });
 
 // Функция валидации URL
 const validateUrl = (url, state) => {
-  const existingUrls = Object.keys(state.feeds); // Создаём массив url-ов
+  const existingUrls = Object.values(state.feeds).map((feed) => feed.url);
+  // Создаём массив url-ов
+
   const schema = createSchema(existingUrls);
 
-  return schema.validate(url).catch((error) => {
+  return schema.validate({ url }).catch((error) => {
     throw new Error(error.message);
   });
 };
