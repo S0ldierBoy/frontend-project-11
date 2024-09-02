@@ -1,6 +1,7 @@
 @import '../node_modules/bootstrap/scss/bootstrap';
 
 $muted-color: #6c757d !important;
+$padding-left: 1.5rem;
 
 .text-muted {
   color: $muted-color;
@@ -27,12 +28,12 @@ a {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    padding-left: 1.5rem; // Отступ для заголовка "Фиды"
+    padding-left: $padding-left; // Отступ для заголовка "Фиды"
   }
 
   .feeds-group {
     list-style: none;
-    padding-left: 1.5rem; // Отступ для элементов списка, такой же как у заголовка
+    padding-left: $padding-left; // Отступ для элементов списка, такой же как у заголовка
     margin: 0;
   }
 
