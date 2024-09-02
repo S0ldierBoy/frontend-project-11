@@ -1,13 +1,10 @@
 import './styles.css';
 import i18n from 'i18next';
-import onChange from 'on-change';
 import validateUrl from './validator.js';
-import renderInput from './view/renderInput.js';
 import resources from './locales/index.js';
 import domParser from './domParser.js';
-import feedView from './view/index.js';
 import { checkForUpdates, fetchRss, assignIdsToPosts } from './utils.js';
-
+import createWatchState from './view/watchState.js';
 function runApp() {
   const i18nextInstance = i18n.createInstance();
 
@@ -31,33 +28,22 @@ function runApp() {
         load: null, // Состояние загрузки изначально неопределено
       };
 
-      const watchedState = onChange(state, () => {
-        switch (state.load) {
-          case 'process':
-            renderInput(elements, state, i18nextInstance);
-            feedView(state);
-            break;
-          case 'error':
-            renderInput(elements, state, i18nextInstance);
-            break;
-        }
-      });
+      const watchedState = createWatchState(state, elements, i18nextInstance);
 
       elements.form.addEventListener('submit', (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
-        const url = formData.get('url').trim(); // +
+        const url = formData.get('url').trim();
 
-        validateUrl(url, state) // +
+        validateUrl(url, state)
           .then(() => {
             elements.submitButton.disabled = true;
             watchedState.error = null;
             return fetchRss(url);
           })
-          .then((data) => domParser(data.contents, url)) // +
-          .then((dataWithoutId) => assignIdsToPosts(dataWithoutId, url)) // +
+          .then((data) => domParser(data.contents, url))
+          .then((dataWithoutId) => assignIdsToPosts(dataWithoutId, url))
           .then((parsedData) => {
-            // + стейт копит фиды по отдельности фид1 = {}
             watchedState.load = 'process';
             elements.submitButton.disabled = false;
             watchedState.feeds[parsedData.id] = parsedData;
@@ -71,7 +57,7 @@ function runApp() {
             watchedState.load = 'error';
           });
       });
-      // Запускаем начальную проверку после загрузки приложения
+
       checkForUpdates(state, watchedState);
     })
     .catch((error) => {
