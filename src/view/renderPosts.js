@@ -114,8 +114,7 @@ const renderPosts = (posts) => {
   });
 
   document.querySelectorAll('[data-bs-dismiss="modal"]').forEach((button) =>
-    button.addEventListener('click', closeModal),
-  );
+    button.addEventListener('click', closeModal));
 
   document.addEventListener('click', (event) => {
     const modalFade = document.querySelector('#modal');
