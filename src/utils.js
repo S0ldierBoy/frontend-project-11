@@ -53,7 +53,7 @@ const checkForUpdates = (state, watchedState) => {
             posts: [...newPosts, ...feed.posts],
           };
           // Обновляем фид в watchedState
-          watchedState.feeds[feed.id] = updatedFeed;
+          Object.assign(watchedState.feeds, { [feed.id]: updatedFeed });
         }
       })
       .catch((error) => {
