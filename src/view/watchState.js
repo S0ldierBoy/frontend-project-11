@@ -2,8 +2,8 @@ import onChange from 'on-change';
 import renderInput from './renderInput.js';
 import feedView from './index.js';
 
-const createWatchState = (state, elements, i18nextInstance) => {
-  return onChange(state, () => {
+const createWatchState = (state, elements, i18nextInstance) =>
+  onChange(state, () => {
     switch (state.load) {
       case 'process':
         renderInput(elements, state, i18nextInstance);
@@ -12,8 +12,9 @@ const createWatchState = (state, elements, i18nextInstance) => {
       case 'error':
         renderInput(elements, state, i18nextInstance);
         break;
+      default:
+        return;
     }
   });
-};
 
 export default createWatchState;
