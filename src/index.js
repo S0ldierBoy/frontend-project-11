@@ -31,11 +31,11 @@ function runApp() {
         load: null, // Состояние загрузки изначально неопределено
       };
 
-      const watchedState = onChange(state, (path) => {
+      const watchedState = onChange(state, () => {
         switch (state.load) {
           case 'process':
-            feedView(state, i18nextInstance);
             renderInput(elements, state, i18nextInstance);
+            feedView(state);
             break;
           case 'error':
             renderInput(elements, state, i18nextInstance);
