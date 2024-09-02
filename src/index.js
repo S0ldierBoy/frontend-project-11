@@ -32,14 +32,10 @@ function runApp() {
       };
 
       const watchedState = onChange(state, (path) => {
-        console.log(state);
-        switch (path) {
-          case 'feeds':
-          case 'posts':
-            feedView(state, i18nextInstance);
-            break;
-          default:
-            renderInput(elements, state, i18nextInstance);
+        if (path.startsWith('feeds')) {
+          feedView(state, i18nextInstance);
+        } else {
+          renderInput(elements, state, i18nextInstance);
         }
       });
 
