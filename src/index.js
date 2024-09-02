@@ -21,7 +21,7 @@ function runApp() {
         form: document.querySelector('.rss-form'),
         input: document.querySelector('#url-input'),
         feedback: document.querySelector('.feedback'),
-        modal: document.querySelector('modal-footer'),
+        modal: document.querySelector('.modal-footer'),
         submitButton: document.querySelector('button[type="submit"]'),
       };
 
@@ -32,10 +32,14 @@ function runApp() {
       };
 
       const watchedState = onChange(state, (path) => {
-        if (path.startsWith('feeds')) {
-          feedView(state, i18nextInstance);
-        } else {
-          renderInput(elements, state, i18nextInstance);
+        switch (state.load) {
+          case 'process':
+            feedView(state, i18nextInstance);
+            renderInput(elements, state, i18nextInstance);
+            break;
+          case 'error':
+            renderInput(elements, state, i18nextInstance);
+            break;
         }
       });
 
@@ -51,13 +55,13 @@ function runApp() {
             return fetchRss(url);
           })
           .then((data) => domParser(data.contents, url)) // +
-
           .then((dataWithoutId) => assignIdsToPosts(dataWithoutId, url)) // +
           .then((parsedData) => {
-            watchedState.feeds[parsedData.id] = parsedData; // + стейт копит фиды по отдельности фид1 = {}
-
-            elements.submitButton.disabled = false;
+            // + стейт копит фиды по отдельности фид1 = {}
             watchedState.load = 'process';
+            elements.submitButton.disabled = false;
+            watchedState.feeds[parsedData.id] = parsedData;
+
             e.target.reset();
             elements.input.focus();
           })
@@ -67,7 +71,6 @@ function runApp() {
             watchedState.load = 'error';
           });
       });
-
       // Запускаем начальную проверку после загрузки приложения
       checkForUpdates(state, watchedState);
     })
@@ -78,18 +81,18 @@ function runApp() {
 
 runApp();
 
-const feed = {
-  title: 'Lorem ipsum feed for an interval of 1 minutes with 10 item(s)',
-  description: 'This is a constantly updating lorem ipsum feed',
-  posts: [
-    {
-      title: 'Lorem ipsum 2024-08-30T18:03:00Z',
-      link: 'http://example.com/test/1725040980',
-      description:
-        'Lorem elit velit ex eu voluptate in ullamco quis non anim cillum excepteur aute.',
-      id: 'http://example.com/test/1725040980',
-    },
-  ],
-  id: 'feed-1',
-  url: 'https://lorem-rss.hexlet.app/feed',
-};
+// const feed = {
+//   title: 'Lorem ipsum feed for an interval of 1 minutes with 10 item(s)',
+//   description: 'This is a constantly updating lorem ipsum feed',
+//   posts: [
+//     {
+//       title: 'Lorem ipsum 2024-08-30T18:03:00Z',
+//       link: 'http://example.com/test/1725040980',
+//       description:
+//         'Lorem elit velit ex eu voluptate in ullamco quis non anim cillum excepteur aute.',
+//       id: 'http://example.com/test/1725040980',
+//     },
+//   ],
+//   id: 'feed-1',
+//   url: 'https://lorem-rss.hexlet.app/feed',
+// };

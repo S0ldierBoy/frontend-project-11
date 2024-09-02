@@ -1,7 +1,7 @@
 import renderFeed from './renderFeed.js';
 import renderPosts from './renderPosts.js';
 
-const feedView = (state, i18nextInstance) => {
+const feedView = (state) => {
   const feedData = Object.values(state.feeds).map((feed) => ({
     id: feed.id,
     title: feed.title,
@@ -14,12 +14,11 @@ const feedView = (state, i18nextInstance) => {
       id: post.id,
       title: post.title,
       description: post.description,
-      url: post.link,
+      link: post.link,
     }))
   );
-
-  renderFeed(feedData, i18nextInstance);
-  renderPosts(postData, i18nextInstance);
+  renderPosts(postData);
+  renderFeed(feedData);
 };
 
 export default feedView;
