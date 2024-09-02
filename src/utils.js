@@ -1,6 +1,6 @@
-import _ from 'lodash';
-import axios from 'axios';
-import domParser from './domParser.js';
+import _ from "lodash";
+import axios from "axios";
+import domParser from "./domParser.js";
 
 const assignIdsToPosts = (data, url) => {
   // Используем link как id для постов
@@ -11,7 +11,7 @@ const assignIdsToPosts = (data, url) => {
 
   const feedWithUrl = {
     ...data,
-    id: _.uniqueId('feed-'),
+    id: _.uniqueId("feed-"),
     url,
     posts: postsWithLinks,
   };
@@ -30,9 +30,9 @@ const fetchRss = (url) =>
     .then((response) => response.data) // Получаем документ
     .catch((error) => {
       if (error.response || error.request) {
-        throw new Error('errors.netError1'); // Ошибка сервера, например 404 или 500
+        throw new Error("errors.netError1"); // Ошибка сервера, например 404 или 500
       }
-      throw new Error('errors.netError2'); // Ошибка запроса
+      throw new Error("errors.netError2"); // Ошибка запроса
     });
 
 const checkForUpdates = (state, watchedState) => {
