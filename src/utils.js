@@ -19,7 +19,7 @@ const assignIdsToPosts = (data, url) => {
   return feedWithUrl;
 };
 
-const fetchRss = (url) =>
+const fetchRss = (url) => 
   axios
     .get(
       `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,
@@ -57,10 +57,7 @@ const checkForUpdates = (state, watchedState) => {
         }
       })
       .catch((error) => {
-        console.error(
-          `Error fetching RSS feed from ${feed.url}:`,
-          error.message
-        );
+        console.error(`Error fetching RSS feed from ${feed.url}:`, error.message);
       })
   );
 
