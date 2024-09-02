@@ -9,5 +9,4 @@ const createWatchState = (state, elements, i18nextInstance) => onChange(state, (
     feedView(state);
   }
 });
-
 export default createWatchState;
