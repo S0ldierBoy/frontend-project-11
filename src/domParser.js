@@ -6,7 +6,7 @@ const domParser = (data) => {
 
       const parseError = xmlDoc.querySelector('parsererror');
       if (parseError) {
-        return reject(new Error(parseError.textContent));
+        return reject(new Error('errors.err2'));
       }
 
       const rss = xmlDoc.querySelector('rss');
