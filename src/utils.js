@@ -43,8 +43,7 @@ const checkForUpdates = (state, watchedState) => {
         // Проверяем новые посты, которых нет в текущем фиде
         const newPosts = parsedData.posts.filter(
           (post) =>
-            !feed.posts.some((existingPost) => existingPost.link === post.link),
-        );
+            !feed.posts.some((existingPost) => existingPost.link === post.link));
 
         if (newPosts.length > 0) {
           // Добавляем новые посты в начало массива
