@@ -30,12 +30,10 @@ const renderPosts = (posts) => {
 
   posts.forEach((post) => {
     const li = document.createElement('li');
-    li.className =
-      'list-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
+    li.className = 'list-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
 
     const a = document.createElement('a');
     a.href = post.link;
-    // Используем только классы fw-bold или fw-normal
     a.className = clickedPosts.has(post.id) ? 'fw-normal' : 'fw-bold';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
@@ -57,26 +55,22 @@ const renderPosts = (posts) => {
     ul.appendChild(li);
   });
 
-  document
-    .querySelectorAll('.list-group a.fw-bold, .list-group button')
-    .forEach((element) => {
-      element.addEventListener('click', (event) => {
-        const clickedElement = event.currentTarget;
-        const parentLi = clickedElement.closest('li');
-        const relatedLink = parentLi.querySelector('a.fw-bold, a.fw-normal');
+  document.querySelectorAll('.list-group a.fw-bold, .list-group button').forEach((element) => {
+    element.addEventListener('click', (event) => {
+      const clickedElement = event.currentTarget;
+      const parentLi = clickedElement.closest('li');
+      const relatedLink = parentLi.querySelector('a.fw-bold, a.fw-normal');
 
-        if (relatedLink) {
-          clickedPosts.add(relatedLink.getAttribute('data-id'));
-          // Меняем класс на fw-normal при клике
-          relatedLink.classList.replace('fw-bold', 'fw-normal');
-        }
-      });
+      if (relatedLink) {
+        clickedPosts.add(relatedLink.getAttribute('data-id'));
+        relatedLink.classList.replace('fw-bold', 'fw-normal');
+      }
     });
+  });
 
-  // Функции модальных окон остаются неизменными
-  document
-    .querySelectorAll('[data-bs-dismiss="modal"]')
-    .forEach((button) => button.addEventListener('click', closeModal));
+  document.querySelectorAll('[data-bs-dismiss="modal"]').forEach((button) =>
+    button.addEventListener('click', closeModal)
+  );
 
   document.addEventListener('click', (event) => {
     const modalFade = document.querySelector('#modal');
@@ -112,7 +106,6 @@ const openModal = (post) => {
   modalBody.textContent = post.description;
   linkButton.href = post.link;
 
-  // Добавляем backdrop, если его еще нет
   if (!document.querySelector('.modal-backdrop')) {
     const backdrop = document.createElement('div');
     backdrop.classList.add('modal-backdrop', 'fade', 'show');
@@ -132,7 +125,6 @@ const closeModal = () => {
   modalFade.classList.remove('show');
   modalFade.style.display = 'none';
 
-  // Удаляем backdrop
   const backdrop = document.querySelector('.modal-backdrop');
   if (backdrop) {
     backdrop.remove();

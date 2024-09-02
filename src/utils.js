@@ -1,6 +1,6 @@
+import _ from 'lodash';
 import axios from 'axios';
 import domParser from './domParser.js';
-import _ from 'lodash';
 
 const assignIdsToPosts = (data, url) => {
   // Используем link как id для постов
@@ -12,7 +12,7 @@ const assignIdsToPosts = (data, url) => {
   const feedWithUrl = {
     ...data,
     id: _.uniqueId('feed-'),
-    url: url,
+    url,
     posts: postsWithLinks,
   };
 
@@ -31,9 +31,8 @@ const fetchRss = (url) =>
     .catch((error) => {
       if (error.response || error.request) {
         throw new Error('errors.netError1'); // Ошибка сервера, например 404 или 500
-      } else {
-        throw new Error('errors.netError2'); // Ошибка запроса
       }
+      throw new Error('errors.netError2'); // Ошибка запроса
     });
 
 const checkForUpdates = (state, watchedState) => {
@@ -51,17 +50,14 @@ const checkForUpdates = (state, watchedState) => {
           // Добавляем новые посты в начало массива
           const updatedFeed = {
             ...feed,
-            posts: [...newPosts, ...feed.posts], // Добавляем новые посты в начало
+            posts: [...newPosts, ...feed.posts],
           };
           // Обновляем фид в watchedState
           watchedState.feeds[feed.id] = updatedFeed;
         }
       })
       .catch((error) => {
-        console.error(
-          `Error fetching RSS feed from ${feed.url}:`,
-          error.message
-        );
+        console.error(`Error fetching RSS feed from ${feed.url}:`, error.message);
       })
   );
 

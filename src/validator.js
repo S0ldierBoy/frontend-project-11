@@ -1,13 +1,12 @@
 import * as yup from 'yup';
 
 // Создаем схему валидации для URL
-const createSchema = (existingUrls) =>
-  yup.object().shape({
-    url: yup
-      .string()
-      .url('errors.err1') // Проверка на валидный URL
-      .notOneOf(existingUrls, 'errors.duplicate'), // Проверка на уникальность URL
-  });
+const createSchema = (existingUrls) => yup.object().shape({
+  url: yup
+    .string()
+    .url('errors.err1') // Проверка на валидный URL
+    .notOneOf(existingUrls, 'errors.duplicate'), // Проверка на уникальность URL
+});
 
 // Функция валидации URL
 const validateUrl = (url, state) => {

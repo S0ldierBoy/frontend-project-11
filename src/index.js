@@ -5,6 +5,7 @@ import resources from './locales/index.js';
 import domParser from './domParser.js';
 import { checkForUpdates, fetchRss, assignIdsToPosts } from './utils.js';
 import createWatchState from './view/watchState.js';
+
 function runApp() {
   const i18nextInstance = i18n.createInstance();
 
