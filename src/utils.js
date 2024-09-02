@@ -19,7 +19,9 @@ const assignIdsToPosts = (data, url) => {
   return feedWithUrl;
 };
 
-const fetchRss = (url) => axios.get(
+const fetchRss = (url) =>
+  axios
+    .get(
       `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,
       {
         timeout: 10000,
