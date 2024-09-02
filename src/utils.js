@@ -19,14 +19,7 @@ const assignIdsToPosts = (data, url) => {
   return feedWithUrl;
 };
 
-const fetchRss = (url) =>
-  axios
-    .get(
-      `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,
-      {
-        timeout: 10000,
-      },
-    )
+const fetchRss = (url) => axios.get(`https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,{timeout: 10000})
     .then((response) => response.data) // Получаем документ
     .catch((error) => {
       if (error.response || error.request) {
