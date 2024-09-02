@@ -29,8 +29,6 @@ const renderFeed = (feeds) => {
     ul.innerHTML = '';
 
     feeds.forEach(({ title, description }) => {
-      console.log(title);
-      console.log('sd');
       const li = document.createElement('li');
       li.className = 'feeds-group-item border-0 border-end-0';
 
