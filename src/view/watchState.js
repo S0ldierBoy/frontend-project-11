@@ -13,7 +13,7 @@ const createWatchState = (state, elements, i18nextInstance) =>
         break;
       default:
         renderInput(elements, state, i18nextInstance);
-        break; // Убрана ненужная команда return
+        break;
     }
   });
 
