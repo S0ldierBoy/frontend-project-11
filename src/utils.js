@@ -36,12 +36,14 @@ const fetchRss = (url) => axios.get(
 const checkForUpdates = (state, watchedState) => {
   const updatePromises = Object.values(state.feeds).map((feed) =>
     fetchRss(feed.url)
-      .then((data) => domParser(data.contents)).then((parsedData) => {
+      .then((data) => domParser(data.contents))
+      .then((parsedData) => {
         // Проверяем новые посты, которых нет в текущем фиде
         const newPosts = parsedData.posts.filter(
           (post) =>
             !feed.posts.some((existingPost) => existingPost.link === post.link),
         );
+
         if (newPosts.length > 0) {
           // Добавляем новые посты в начало массива
           const updatedFeed = {
