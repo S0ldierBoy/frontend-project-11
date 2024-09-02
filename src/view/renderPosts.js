@@ -2,7 +2,7 @@ const clickedPosts = new Set();
 
 // Функция для открытия модального окна
 const openModal = (post) => {
-  const body = document.body;
+  const { body } = document;
   const modalFade = document.querySelector('#modal');
   const modalContent = modalFade.querySelector('.modal-content');
   const modalTitle = modalContent.querySelector('.modal-title');
@@ -29,7 +29,7 @@ const openModal = (post) => {
 
 // Функция для закрытия модального окна
 const closeModal = () => {
-  const body = document.body;
+  const { body } = document;
   const modalFade = document.querySelector('#modal');
 
   body.classList.remove('modal-open');
