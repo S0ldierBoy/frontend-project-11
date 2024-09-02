@@ -19,20 +19,21 @@ const assignIdsToPosts = (data, url) => {
   return feedWithUrl;
 };
 
-const fetchRss = (url) => 
-  axios.get(
-    `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,
-    {
-      timeout: 10000,
-    },
-  )
-  .then((response) => response.data) // Получаем документ
-  .catch((error) => {
-    if (error.response || error.request) {
-      throw new Error('errors.netError1'); // Ошибка сервера, например 404 или 500
-    }
-    throw new Error('errors.netError2'); // Ошибка запроса
-  });
+const fetchRss = (url) =>
+  axios
+    .get(
+      `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,
+      {
+        timeout: 10000,
+      }
+    )
+    .then((response) => response.data) // Получаем документ
+    .catch((error) => {
+      if (error.response || error.request) {
+        throw new Error('errors.netError1'); // Ошибка сервера, например 404 или 500
+      }
+      throw new Error('errors.netError2'); // Ошибка запроса
+    });
 
 const checkForUpdates = (state, watchedState) => {
   const updatePromises = Object.values(state.feeds).map((feed) =>
@@ -42,7 +43,7 @@ const checkForUpdates = (state, watchedState) => {
         // Проверяем новые посты, которых нет в текущем фиде
         const newPosts = parsedData.posts.filter(
           (post) =>
-            !feed.posts.some((existingPost) => existingPost.link === post.link),
+            !feed.posts.some((existingPost) => existingPost.link === post.link)
         );
 
         if (newPosts.length > 0) {
@@ -56,8 +57,11 @@ const checkForUpdates = (state, watchedState) => {
         }
       })
       .catch((error) => {
-        console.error(`Error fetching RSS feed from ${feed.url}:`, error.message);
-      }),
+        console.error(
+          `Error fetching RSS feed from ${feed.url}:`,
+          error.message
+        );
+      })
   );
 
   Promise.all(updatePromises).finally(() => {
