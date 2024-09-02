@@ -11,7 +11,7 @@ const domParser = (data) => {
 
       const rss = xmlDoc.querySelector('rss');
       if (!rss) {
-        throw new Error('errors.unknownError');
+        return reject(new Error('errors.unknownError'));
       }
 
       const channel = rss.querySelector('channel');
@@ -26,8 +26,6 @@ const domParser = (data) => {
           description: item.querySelector('description')?.textContent || '',
         })),
       };
-      // console.log(feed);
-      // console.log(url);
 
       resolve(feed);
     } catch (error) {
