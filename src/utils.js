@@ -34,9 +34,8 @@ const fetchRss = (url) => axios
     throw new Error('errors.netError2'); // Ошибка запроса
   });
 
-const checkForUpdates = (state, watchedState) => {
-  const updatePromises = Object.values(state.feeds).map((feed) =>
-    fetchRss(feed.url)
+  const checkForUpdates = (state, watchedState) => {
+    const updatePromises = Object.values(state.feeds).map((feed) => fetchRss(feed.url)
       .then((data) => domParser(data.contents))
       .then((parsedData) => {
         // Проверяем новые посты, которых нет в текущем фиде
