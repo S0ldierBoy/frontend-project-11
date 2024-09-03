@@ -43,7 +43,7 @@ const fetchRss = (url) => axios
           (post) =>
             !feed.posts.some((existingPost) => existingPost.link === post.link),
         );
-
+  
         if (newPosts.length > 0) {
           // Добавляем новые посты в начало массива
           const updatedFeed = {
@@ -60,10 +60,10 @@ const fetchRss = (url) => axios
           error.message,
         );
       }));
-
-  Promise.all(updatePromises).finally(() => {
-    setTimeout(() => checkForUpdates(state, watchedState), 5000);
-  });
+  
+    Promise.all(updatePromises).finally(() => {
+      setTimeout(() => checkForUpdates(state, watchedState), 5000);
+    });
 };
 
 export { fetchRss, checkForUpdates, assignIdsToPosts };
