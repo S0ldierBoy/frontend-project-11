@@ -1,4 +1,4 @@
-const renderFeed = (feeds) => {
+const renderFeed = (feeds, i18n) => {
   const mainDiv = document.querySelector('.feeds');
   let feedsContainer = mainDiv.querySelector('.card');
 
@@ -12,7 +12,7 @@ const renderFeed = (feeds) => {
 
     const h2 = document.createElement('h2');
     h2.className = 'card-title h4';
-    h2.textContent = 'Фиды';
+    h2.textContent = i18n.t('headers.feeds');
 
     const ul = document.createElement('ul');
     ul.className = 'feeds-group border-0 rounded-0';

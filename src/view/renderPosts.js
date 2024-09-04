@@ -1,11 +1,12 @@
 // Функция для открытия модального окна
-const openModal = (post) => {
+const openModal = (post, i18n) => {
   const { body } = document;
   const modalFade = document.querySelector('#modal');
   const modalContent = modalFade.querySelector('.modal-content');
   const modalTitle = modalContent.querySelector('.modal-title');
   const modalBody = modalContent.querySelector('.modal-body');
   const linkButton = modalContent.querySelector('.btn-primary');
+  const closeButton = modalContent.querySelector('.btn.btn-secondary');
 
   body.classList.add('modal-open');
   body.style.overflow = 'hidden';
@@ -17,6 +18,8 @@ const openModal = (post) => {
   modalTitle.textContent = post.title;
   modalBody.textContent = post.description;
   linkButton.href = post.link;
+  linkButton.textContent = i18n.t('buttons.read');
+  closeButton.textContent = i18n.t('buttons.close');
 
   if (!document.querySelector('.modal-backdrop')) {
     const backdrop = document.createElement('div');
@@ -91,7 +94,7 @@ const renderPosts = (posts, state, i18n) => {
     button.setAttribute('data-bs-target', '#modal');
     button.textContent = i18n.t('buttons.viewing');
 
-    button.addEventListener('click', () => openModal(post));
+    button.addEventListener('click', () => openModal(post, i18n));
 
     li.appendChild(a);
     li.appendChild(button);

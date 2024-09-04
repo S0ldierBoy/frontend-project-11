@@ -18,6 +18,8 @@ const resources = {
       },
       buttons: {
         viewing: 'Просмотр',
+        read: 'Читать полностью',
+        close: 'Закрыть',
       },
     },
   },
