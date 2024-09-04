@@ -12,6 +12,13 @@ const resources = {
       successful: {
         success1: 'RSS успешно загружен',
       },
+      headers: {
+        feeds: 'Фиды',
+        posts: 'Посты',
+      },
+      buttons: {
+        viewing: 'Просмотр',
+      },
     },
   },
 };
