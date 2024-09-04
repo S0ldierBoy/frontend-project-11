@@ -2,7 +2,7 @@ import _ from 'lodash';
 import axios from 'axios';
 import domParser from './domParser.js';
 
-const assignIdsToPosts = (data, url) => {
+export const assignIdsToPosts = (data, url) => {
   // Используем link как id для постов
   const postsWithLinks = data.posts.map((post) => ({
     ...post,
@@ -19,7 +19,7 @@ const assignIdsToPosts = (data, url) => {
   return feedWithUrl;
 };
 
-const fetchRss = (url) => axios
+export const fetchRss = (url) => axios
   .get(
     `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,
     {
@@ -34,7 +34,7 @@ const fetchRss = (url) => axios
     throw new Error('errors.serverError'); // Ошибка запроса
   });
 
-const checkForUpdates = (state, watchedState) => {
+export const checkForUpdates = (state, watchedState) => {
   const updatePromises = Object.values(state.feeds).map((feed) => fetchRss(feed.url)
     .then((data) => domParser(data.contents))
     .then((parsedData) => {
@@ -64,5 +64,3 @@ const checkForUpdates = (state, watchedState) => {
     setTimeout(() => checkForUpdates(state, watchedState), 5000);
   });
 };
-
-export { fetchRss, checkForUpdates, assignIdsToPosts };
