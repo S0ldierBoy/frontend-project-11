@@ -9,11 +9,11 @@ const domParser = (data) => new Promise((resolve, reject) => {
       return;
     }
 
-    const rss = xmlDoc.querySelector('rss');
-    if (!rss) {
-      reject(new Error('errors.unknownError'));
-      return;
-    }
+    // const rss = xmlDoc.querySelector('rss');
+    // if (!rss) {
+    //   reject(new Error('errors.unknownError'));
+    //   return;
+    // }
 
     const channel = rss.querySelector('channel');
     const items = rss.querySelectorAll('item');
