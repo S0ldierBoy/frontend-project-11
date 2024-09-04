@@ -1,5 +1,3 @@
-const clickedPosts = new Set();
-
 // Функция для открытия модального окна
 const openModal = (post) => {
   const { body } = document;
@@ -45,7 +43,7 @@ const closeModal = () => {
   }
 };
 
-const renderPosts = (posts) => {
+const renderPosts = (posts, state) => {
   const mainDiv = document.querySelector('.posts');
   let cardDiv = mainDiv.querySelector('.card');
 
@@ -79,7 +77,7 @@ const renderPosts = (posts) => {
 
     const a = document.createElement('a');
     a.href = post.link;
-    a.className = clickedPosts.has(post.id) ? 'fw-normal' : 'fw-bold';
+    a.className = state.clickedPosts.has(post.id) ? 'fw-normal' : 'fw-bold';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
@@ -109,7 +107,7 @@ const renderPosts = (posts) => {
         const relatedLink = parentLi.querySelector('a.fw-bold, a.fw-normal');
 
         if (relatedLink) {
-          clickedPosts.add(relatedLink.getAttribute('data-id'));
+          state.clickedPosts.add(relatedLink.getAttribute('data-id'));
           relatedLink.classList.replace('fw-bold', 'fw-normal');
         }
       });
