@@ -2,25 +2,34 @@ const resources = {
   ru: {
     translation: {
       errors: {
-        err1: 'Ссылка должна быть валидным URL',
-        err2: 'Ресурс не содержит валидный RSS',
-        duplicate: 'RSS уже существует',
-        netError1: 'Ошибка сети',
-        netError2: 'Ошибка сервера',
-        unknownError: 'Неизвестная ошибка. Что-то пошло не так.',
+        invalidUrl: 'Ссылка должна быть валидным URL', // err1
+        invalidRss: 'Ресурс не содержит валидный RSS', // err2
+        duplicateRss: 'RSS уже существует', // duplicate
+        networkError: 'Ошибка сети', // netError1
+        serverError: 'Ошибка сервера', // netError2
+        unknownError: 'Неизвестная ошибка. Что-то пошло не так.', // unknownError
+        i18nInitError: 'Ошибка инициализации i18n', // Новая ошибка для инициализации i18n
+        rssFetchError: 'Ошибка загрузки RSS фида с ', // Новая ошибка для загрузки RSS фида
       },
       successful: {
-        success1: 'RSS успешно загружен',
+        rssLoadSuccess: 'RSS успешно загружен', // success1
       },
       headers: {
         feeds: 'Фиды',
         posts: 'Посты',
       },
       buttons: {
-        viewing: 'Просмотр',
-        read: 'Читать полностью',
-        close: 'Закрыть',
+        viewing: 'Просмотр', // viewing
+        read: 'Читать полностью', // read
+        close: 'Закрыть', // close
       },
+      title: 'Hexlet Frontend Project',
+      mainHeading: 'RSS агрегатор',
+      mainLead: 'Начните читать RSS сегодня! Это легко, это удобно.',
+      rssLabel: 'Ссылка RSS',
+      submitButton: 'Добавить',
+      exampleText: 'Пример: https://lorem-rss.hexlet.app/feed',
+      footerText: 'Hexlet',
     },
   },
 };

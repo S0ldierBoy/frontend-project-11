@@ -5,7 +5,7 @@ const domParser = (data) => new Promise((resolve, reject) => {
 
     const parseError = xmlDoc.querySelector('parsererror');
     if (parseError) {
-      reject(new Error('errors.err2'));
+      reject(new Error('errors.invalidRss'));
       return;
     }
 

@@ -4,8 +4,8 @@ import * as yup from 'yup';
 const createSchema = (existingUrls) => yup.object().shape({
   url: yup
     .string()
-    .url('errors.err1') // Проверка на валидный URL
-    .notOneOf(existingUrls, 'errors.duplicate'), // Проверка на уникальность URL
+    .url('errors.invalidUrl') // Проверка на валидный URL
+    .notOneOf(existingUrls, 'errors.duplicateRss'), // Проверка на уникальность URL
 });
 
 // Функция валидации URL

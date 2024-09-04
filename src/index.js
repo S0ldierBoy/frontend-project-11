@@ -63,7 +63,7 @@ function runApp() {
       checkForUpdates(state, watchedState);
     })
     .catch((error) => {
-      console.error('Ошибка инициализации i18', error);
+      console.error('errors.i18nInitError', error);
     });
 }
 

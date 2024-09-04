@@ -29,9 +29,9 @@ const fetchRss = (url) => axios
   .then((response) => response.data) // Получаем документ
   .catch((error) => {
     if (error.response || error.request) {
-      throw new Error('errors.netError1'); // Ошибка сервера, например 404 или 500
+      throw new Error('errors.networkError'); // Ошибка сервера, например 404 или 500
     }
-    throw new Error('errors.netError2'); // Ошибка запроса
+    throw new Error('errors.serverError'); // Ошибка запроса
   });
 
 const checkForUpdates = (state, watchedState) => {
@@ -55,7 +55,7 @@ const checkForUpdates = (state, watchedState) => {
     })
     .catch((error) => {
       console.error(
-        `Error fetching RSS feed from ${feed.url}:`,
+        `errors.rssFetchError ${feed.url}:`,
         error.message,
       );
     }));
