@@ -27,7 +27,6 @@ const closeModal = () => {
     const backdrop = document.querySelector('.modal-backdrop');
     if (backdrop) {
       backdrop.remove();
-      console.log('Backdrop removed.');
     }
 
     // Убираем классы модального окна
@@ -83,6 +82,8 @@ const renderPosts = (posts, state, i18n) => {
     button.setAttribute('data-bs-toggle', 'modal');
     button.setAttribute('data-bs-target', '#modal');
     button.textContent = i18n.t('buttons.viewing');
+    const closeButton = document.querySelector('.btn.btn-secondary');
+    closeButton.textContent = i18n.t('buttons.close');
 
     // Открываем модальное окно при нажатии на кнопку
     button.addEventListener('click', () => openModal(post, i18n));
