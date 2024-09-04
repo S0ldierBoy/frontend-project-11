@@ -23,13 +23,6 @@ const resources = {
         read: 'Читать полностью', // read
         close: 'Закрыть', // close
       },
-      title: 'Hexlet Frontend Project',
-      mainHeading: 'RSS агрегатор',
-      mainLead: 'Начните читать RSS сегодня! Это легко, это удобно.',
-      rssLabel: 'Ссылка RSS',
-      submitButton: 'Добавить',
-      exampleText: 'Пример: https://lorem-rss.hexlet.app/feed',
-      footerText: 'Hexlet',
     },
   },
 };
