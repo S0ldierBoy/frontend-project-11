@@ -19,12 +19,18 @@ const openModal = (post, i18n) => {
 const closeModal = () => {
   const modalElement = document.getElementById('modal');
   const modalInstance = Modal.getInstance(modalElement);
-  const backdrop = document.querySelector('.modal-backdrop');
 
   if (modalInstance) {
     modalInstance.hide(); // Закрываем модальное окно
-    backdrop.remove();
 
+    // Убираем backdrop вручную, если он не удаляется автоматически
+    const backdrop = document.querySelector('.modal-backdrop');
+    if (backdrop) {
+      backdrop.remove();
+      console.log('Backdrop removed.');
+    }
+
+    // Убираем классы модального окна
     modalElement.classList.remove('show');
     modalElement.style.display = 'none';
   }
