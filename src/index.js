@@ -27,7 +27,7 @@ function runApp() {
         feeds: {}, // Пустой объект, который будет заполняться фидами, каждый фид будет объектом
         error: null, // Ошибка изначально отсутствует
         load: null, // Состояние загрузки изначально неопределено
-        clickedPosts : new Set(), // Храним кликнутые посты
+        clickedPosts: new Set(), // Храним кликнутые посты
       };
 
       const watchedState = createWatchState(state, elements, i18nextInstance);
