@@ -44,8 +44,8 @@ function runApp() {
             return fetchRss(url);
           })
           .then((data) => domParser(data.contents, url))
-          .then((dataWithoutId) => assignIdsToPosts(dataWithoutId, url))
-          .then((parsedData) => {
+          .then((dataWithoutId) => {
+            const parsedData = assignIdsToPosts(dataWithoutId, url);
             watchedState.load = 'process';
             elements.submitButton.disabled = false;
             watchedState.feeds[parsedData.id] = parsedData;
