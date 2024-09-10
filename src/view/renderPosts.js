@@ -69,7 +69,7 @@ const renderPosts = (posts, state, i18n) => {
 
     const a = document.createElement('a');
     a.href = post.link;
-    a.className = state.clickedPosts.has(post.id) ? 'fw-normal' : 'fw-bold';
+    a.className = state.viewedPosts.has(post.id) ? 'fw-normal' : 'fw-bold';
     a.setAttribute('data-id', post.id);
     a.target = '_blank';
     a.rel = 'noopener noreferrer';
@@ -101,7 +101,7 @@ const renderPosts = (posts, state, i18n) => {
         const relatedLink = parentLi.querySelector('a.fw-bold, a.fw-normal');
 
         if (relatedLink) {
-          state.clickedPosts.add(relatedLink.getAttribute('data-id'));
+          state.viewedPosts.add(relatedLink.getAttribute('data-id'));
           relatedLink.classList.replace('fw-bold', 'fw-normal');
         }
       });
