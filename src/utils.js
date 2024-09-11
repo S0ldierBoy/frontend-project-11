@@ -19,42 +19,44 @@ export const assignIdsToPosts = (data, url) => {
   return feedWithUrl;
 };
 
-export const fetchRss = (url) => axios
-  .get(
-    `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,
-    {
-      timeout: 10000,
-    },
-  )
-  .then((response) => response.data) // Получаем документ
-  .catch((error) => {
-    if (error.response || error.request) {
-      throw new Error('errors.networkError'); // Ошибка сервера, например 404 или 500
-    }
-    throw new Error('errors.serverError'); // Ошибка запроса
-  });
+export const fetchRss = (url) =>
+  axios
+    .get(
+      `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,
+      {
+        timeout: 10000,
+      }
+    )
+    .then((response) => response.data) // Получаем документ
+    .catch((error) => {
+      if (error.response || error.request) {
+        throw new Error('errors.networkError'); // Ошибка сервера, например 404 или 500
+      }
+      throw new Error('errors.serverError'); // Ошибка запроса
+    });
 
 export const checkForUpdates = (watchedState) => {
-  const updatePromises = Object.values(watchedState.feeds).map((feed) => fetchRss(feed.url)
-    .then((data) => {
-      // Проверяем новые посты, которых нет в текущем фиде
-      const parsedData = domParser(data.contents);
-      const newPosts = parsedData.posts.filter(
-        (post) => !feed.posts.some((existingPost) => existingPost.link === post.link),
-      );
+  const updatePromises = Object.values(watchedState.feeds).map((feed) =>
+    fetchRss(feed.url)
+      .then((data) => {
+        // Проверяем новые посты, которых нет в текущем фиде
+        const dataWithoutId = domParser(data.contents);
+        const parsedData = assignIdsToPosts(dataWithoutId, feed.url);
 
-      watchedState.feeds[feed.id] = {
-        ...feed,
-        posts: [...newPosts, ...feed.posts],
-      };
+        const newPosts = parsedData.posts.filter(
+          (post) =>
+            !feed.posts.some((existingPost) => existingPost.link === post.link)
+        );
 
-    })
-    .catch((error) => {
-      console.error(
-        `errors.rssFetchError ${feed.url}:`,
-        error.message,
-      );
-    }));
+        watchedState.feeds[feed.id] = {
+          ...feed,
+          posts: [...newPosts, ...feed.posts],
+        };
+      })
+      .catch((error) => {
+        console.error(`errors.rssFetchError ${feed.url}:`, error.message);
+      })
+  );
 
   Promise.all(updatePromises).finally(() => {
     setTimeout(() => checkForUpdates(watchedState), 5000);
