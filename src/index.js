@@ -43,8 +43,8 @@ function runApp() {
             watchedState.error = null;
             return fetchRss(url);
           })
-          .then((data) => domParser(data.contents, url))
-          .then((dataWithoutId) => {
+          .then((data) => {
+            const dataWithoutId = domParser(data.contents);
             const parsedData = assignIdsToPosts(dataWithoutId, url);
             watchedState.load = 'process';
             elements.submitButton.disabled = false;
@@ -60,7 +60,7 @@ function runApp() {
           });
       });
 
-      checkForUpdates(state, watchedState);
+      checkForUpdates(watchedState);
     })
     .catch((error) => {
       console.error('errors.i18nInitError', error);

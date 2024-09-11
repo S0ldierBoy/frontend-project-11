@@ -1,8 +1,7 @@
-import { Modal } from 'bootstrap';
+import 'bootstrap';
 
 const openModal = (post, i18n) => {
   const modalElement = document.getElementById('modal');
-  const modalInstance = new Modal(modalElement);
 
   const modalTitle = modalElement.querySelector('.modal-title');
   const modalBody = modalElement.querySelector('.modal-body');
@@ -12,27 +11,6 @@ const openModal = (post, i18n) => {
   modalBody.textContent = post.description;
   linkButton.href = post.link;
   linkButton.textContent = i18n.t('buttons.read');
-
-  modalInstance.show(); // Показываем модальное окно
-};
-
-const closeModal = () => {
-  const modalElement = document.getElementById('modal');
-  const modalInstance = Modal.getInstance(modalElement);
-
-  if (modalInstance) {
-    modalInstance.hide(); // Закрываем модальное окно
-
-    // Убираем backdrop вручную, если он не удаляется автоматически
-    const backdrop = document.querySelector('.modal-backdrop');
-    if (backdrop) {
-      backdrop.remove();
-    }
-
-    // Убираем классы модального окна
-    modalElement.classList.remove('show');
-    modalElement.style.display = 'none';
-  }
 };
 
 const renderPosts = (posts, state, i18n) => {
@@ -65,7 +43,8 @@ const renderPosts = (posts, state, i18n) => {
 
   posts.forEach((post) => {
     const li = document.createElement('li');
-    li.className = 'list-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
+    li.className =
+      'list-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
 
     const a = document.createElement('a');
     a.href = post.link;
@@ -92,40 +71,21 @@ const renderPosts = (posts, state, i18n) => {
     ul.appendChild(li);
   });
 
-  document
-    .querySelectorAll('.list-group a.fw-bold, .list-group button')
-    .forEach((element) => {
-      element.addEventListener('click', (event) => {
-        const clickedElement = event.currentTarget;
-        const parentLi = clickedElement.closest('li');
-        const relatedLink = parentLi.querySelector('a.fw-bold, a.fw-normal');
+  document.querySelector('.list-group').addEventListener('click', (event) => {
+    const listItem = event.target.closest('li');
 
-        if (relatedLink) {
-          state.viewedPosts.add(relatedLink.getAttribute('data-id'));
-          relatedLink.classList.replace('fw-bold', 'fw-normal');
-        }
-      });
-    });
+    if (!listItem) return;
 
-  // Закрытие модального окна при клике на кнопку с атрибутом data-bs-dismiss
-  document.querySelectorAll('[data-bs-dismiss="modal"]').forEach((button) => {
-    button.addEventListener('click', closeModal);
+    updateListItemState(listItem);
   });
 
-  // Закрытие модального окна при клике на фон (backdrop)
-  document.addEventListener('click', (event) => {
-    const modalElement = document.getElementById('modal');
-    if (event.target === modalElement) {
-      closeModal();
-    }
-  });
+  function updateListItemState(listItem) {
+    const linkElement = listItem.querySelector('a.fw-bold, a.fw-normal');
+    if (!linkElement) return;
 
-  // Закрытие модального окна при нажатии клавиши Escape
-  document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') {
-      closeModal();
-    }
-  });
+    linkElement.classList.replace('fw-bold', 'fw-normal');
+    state.viewedPosts.add(linkElement.dataset.id);
+  }
 };
 
 export default renderPosts;

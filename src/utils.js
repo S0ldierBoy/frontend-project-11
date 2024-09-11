@@ -34,11 +34,11 @@ export const fetchRss = (url) => axios
     throw new Error('errors.serverError'); // Ошибка запроса
   });
 
-export const checkForUpdates = (state, watchedState) => {
-  const updatePromises = Object.values(state.feeds).map((feed) => fetchRss(feed.url)
-    .then((data) => domParser(data.contents))
-    .then((parsedData) => {
+export const checkForUpdates = (watchedState) => {
+  const updatePromises = Object.values(watchedState.feeds).map((feed) => fetchRss(feed.url)
+    .then((data) => {
       // Проверяем новые посты, которых нет в текущем фиде
+      const parsedData = domParser(data.contents);
       const newPosts = parsedData.posts.filter(
         (post) => !feed.posts.some((existingPost) => existingPost.link === post.link),
       );
@@ -61,6 +61,6 @@ export const checkForUpdates = (state, watchedState) => {
     }));
 
   Promise.all(updatePromises).finally(() => {
-    setTimeout(() => checkForUpdates(state, watchedState), 5000);
+    setTimeout(() => checkForUpdates(watchedState), 5000);
   });
 };
