@@ -43,15 +43,11 @@ export const checkForUpdates = (watchedState) => {
         (post) => !feed.posts.some((existingPost) => existingPost.link === post.link),
       );
 
-      if (newPosts.length > 0) {
-        // Добавляем новые посты в начало массива
-        const updatedFeed = {
-          ...feed,
-          posts: [...newPosts, ...feed.posts],
-        };
-        // Обновляем фид в watchedState
-        Object.assign(watchedState.feeds, { [feed.id]: updatedFeed });
-      }
+      watchedState.feeds[feed.id] = {
+        ...feed,
+        posts: [...newPosts, ...feed.posts],
+      };
+
     })
     .catch((error) => {
       console.error(
