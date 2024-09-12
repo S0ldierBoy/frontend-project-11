@@ -41,7 +41,7 @@ export const checkForUpdates = (watchedState) => {
       .then((data) => {
         // Проверяем новые посты, которых нет в текущем фиде
         const parsedData = domParser(data.contents);
-        console.log(watchedState.feeds)
+
         const newPosts = parsedData.posts.filter(
           (post) =>
             !feed.posts.some((existingPost) => existingPost.link === post.link)
