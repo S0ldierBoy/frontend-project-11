@@ -40,17 +40,21 @@ export const checkForUpdates = (watchedState) => {
     fetchRss(feed.url)
       .then((data) => {
         // Проверяем новые посты, которых нет в текущем фиде
-        const dataWithoutId = domParser(data.contents);
-        const parsedData = assignIdsToPosts(dataWithoutId, feed.url);
-
+        const parsedData = domParser(data.contents);
+        console.log(watchedState.feeds)
         const newPosts = parsedData.posts.filter(
           (post) =>
             !feed.posts.some((existingPost) => existingPost.link === post.link)
         );
 
+        const newPostsWithIds = newPosts.map((post) => ({
+          ...post,
+          id: post.link, // Используем link как ID для новых постов
+        }));
+
         watchedState.feeds[feed.id] = {
           ...feed,
-          posts: [...newPosts, ...feed.posts],
+          posts: [...newPostsWithIds, ...feed.posts],
         };
       })
       .catch((error) => {
