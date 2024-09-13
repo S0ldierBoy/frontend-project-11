@@ -8,7 +8,7 @@ const __dirname = path.dirname(__filename);
 
 export default {
   mode: process.env.NODE_ENV || 'development',
-  entry: './src/index.js',
+  entry: './src/app.js',
   module: {
     rules: [
       {
@@ -53,6 +53,6 @@ export default {
   ],
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'src/index.js',
+    filename: 'src/app.js',
   },
 };
