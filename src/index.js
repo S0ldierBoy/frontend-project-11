@@ -3,8 +3,9 @@ import i18n from 'i18next';
 import validateUrl from './validator.js';
 import resources from './locales/index.js';
 import domParser from './domParser.js';
-import { checkForUpdates, fetchRss, assignIdsToPosts } from './utils.js';
+import { checkForUpdates, fetchRss } from './utils.js';
 import createWatchState from './view/watchState.js';
+import _ from 'lodash';
 
 function runApp() {
   const i18nextInstance = i18n.createInstance();
@@ -24,10 +25,11 @@ function runApp() {
       };
 
       const state = {
-        feeds: {}, // Пустой объект, который будет заполняться фидами, каждый фид будет объектом
-        error: null, // Ошибка изначально отсутствует
-        load: null, // Состояние загрузки изначально неопределено
-        viewedPosts: new Set(), // Храним кликнутые посты
+        feeds: [],
+        posts: [],
+        error: null,
+        load: null,
+        viewedPosts: new Set(),
       };
 
       const watchedState = createWatchState(state, elements, i18nextInstance);
@@ -45,16 +47,37 @@ function runApp() {
           })
           .then((data) => {
             const dataWithoutId = domParser(data.contents);
-            const parsedData = assignIdsToPosts(dataWithoutId, url);
+            const feedId = _.uniqueId('feed-');
+
+            const feed = {
+              id: feedId,
+              title: dataWithoutId.title,
+              description: dataWithoutId.description,
+              url,
+            };
+
+            
+
+            const posts = dataWithoutId.posts.map((post) => ({
+              ...post,
+              id: _.uniqueId('post-'),
+              feedId,
+            }));
+
+            console.log(feed)
+            console.log(posts)
+
+            watchedState.feeds.unshift(feed);
+            watchedState.posts = [...posts, ...watchedState.posts];
+
             watchedState.load = 'process';
             elements.submitButton.disabled = false;
-            watchedState.feeds[parsedData.id] = parsedData;
 
             e.target.reset();
             elements.input.focus();
           })
           .catch((error) => {
-            watchedState.error = error.message; // Записываем текст ошибки для отображения
+            watchedState.error = error.message;
             elements.submitButton.disabled = false;
             watchedState.load = 'error';
           });
