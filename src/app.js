@@ -1,5 +1,6 @@
 import './styles.css';
 import 'bootstrap';
+import _ from 'lodash';
 import i18n from 'i18next';
 import validateUrl from './validator.js';
 import resources from './locales/index.js';
@@ -7,7 +8,6 @@ import domParser from './domParser.js';
 import { checkForUpdates, fetchRss } from './utils.js';
 import createWatchState from './view/watchState.js';
 import openModal from './view/modal.js';
-import _ from 'lodash';
 
 function runApp() {
   const i18nextInstance = i18n.createInstance();
