@@ -1,17 +1,4 @@
-import 'bootstrap';
-
-const openModal = (post, i18n) => {
-  const modalElement = document.getElementById('modal');
-
-  const modalTitle = modalElement.querySelector('.modal-title');
-  const modalBody = modalElement.querySelector('.modal-body');
-  const linkButton = modalElement.querySelector('.btn-primary');
-
-  modalTitle.textContent = post.title;
-  modalBody.textContent = post.description;
-  linkButton.href = post.link;
-  linkButton.textContent = i18n.t('buttons.read');
-};
+//import 'bootstrap';
 
 const renderPosts = (posts, state, i18n) => {
   const mainDiv = document.querySelector('.posts');
@@ -43,9 +30,7 @@ const renderPosts = (posts, state, i18n) => {
 
   posts.forEach((post) => {
     const li = document.createElement('li');
-    li.className =
-      'list-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
-
+    li.className = 'list-group-item d-flex justify-content-between align-items-start border-0 border-end-0';
     const a = document.createElement('a');
     a.href = post.link;
     a.className = state.viewedPosts.has(post.id) ? 'fw-normal' : 'fw-bold';
@@ -57,35 +42,15 @@ const renderPosts = (posts, state, i18n) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'btn btn-outline-primary btn-sm';
+    button.setAttribute('data-id', post.id);
     button.setAttribute('data-bs-toggle', 'modal');
     button.setAttribute('data-bs-target', '#modal');
     button.textContent = i18n.t('buttons.viewing');
-    const closeButton = document.querySelector('.btn.btn-secondary');
-    closeButton.textContent = i18n.t('buttons.close');
-
-    // Открываем модальное окно при нажатии на кнопку
-    button.addEventListener('click', () => openModal(post, i18n));
 
     li.appendChild(a);
     li.appendChild(button);
     ul.appendChild(li);
   });
-
-  document.querySelector('.list-group').addEventListener('click', (event) => {
-    const listItem = event.target.closest('li');
-
-    if (!listItem) return;
-
-    updateListItemState(listItem);
-  });
-
-  function updateListItemState(listItem) {
-    const linkElement = listItem.querySelector('a.fw-bold, a.fw-normal');
-    if (!linkElement) return;
-
-    linkElement.classList.replace('fw-bold', 'fw-normal');
-    state.viewedPosts.add(linkElement.dataset.id);
-  }
 };
 
 export default renderPosts;
