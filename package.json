@@ -12,7 +12,8 @@
     "watch": "webpack --watch",
     "serve": "webpack serve",
     "build-css": "node-sass scss/main.scss src/styles.css --output-style compressed",
-    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+    "watch-css": "nodemon -e scss -x \"npm run build-css\"",
+    "lint": "eslint . --config ./eslint.config.js"
   },
   "repository": {
     "type": "git",
