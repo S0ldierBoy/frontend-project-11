@@ -8,7 +8,10 @@ $padding-left: 1.5rem;
 }
 
 a {
-  text-decoration: none;
+  white-space: nowrap; // Запрещаем перенос строк
+  overflow: hidden; // Скрываем текст, который не помещается
+  text-overflow: ellipsis; // Добавляем многоточие в конце строки
+  padding-right: 20px; // Внутренние отступы (padding)
 
   &.fw-bold {
     color: blue; // Активный цвет ссылки
