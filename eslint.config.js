@@ -8,6 +8,7 @@ export default [
     },
     rules: {
       'no-unused-vars': 'warn',
+      'no-param-reassign': ['error', { props: false }],
     },
   },
   pluginJs.configs.recommended,

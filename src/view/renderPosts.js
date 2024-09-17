@@ -1,5 +1,3 @@
-//import 'bootstrap';
-
 const renderPosts = (posts, state, i18n) => {
   const mainDiv = document.querySelector('.posts');
   let cardDiv = mainDiv.querySelector('.card');
