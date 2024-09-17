@@ -31,6 +31,7 @@ function runApp() {
         feeds: [],
         posts: [],
         error: null,
+        feedback: null,
         viewedPosts: new Set(),
       };
 
@@ -67,6 +68,7 @@ function runApp() {
             watchedState.feeds.unshift(feed);
             watchedState.posts = [...posts, ...watchedState.posts];
 
+            watchedState.feedback = 'success';
             elements.submitButton.disabled = false;
 
             e.target.reset();
