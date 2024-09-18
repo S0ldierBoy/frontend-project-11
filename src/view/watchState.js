@@ -38,7 +38,6 @@ const createWatchState = (state, elements, i18n) => {
         break;
     }
   });
-
   return watchedState;
 };
 
