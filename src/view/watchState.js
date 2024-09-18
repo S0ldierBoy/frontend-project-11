@@ -7,7 +7,7 @@ const createWatchState = (state, elements, i18n) => {
   const watchedState = onChange(state, (path) => {
     switch (path) {
       case 'feeds':
-        renderFeed(state.feeds, i18n);
+        renderFeed(state.feeds, i18n, elements);
         renderPosts(state.posts, state, i18n, elements);
         break;
 

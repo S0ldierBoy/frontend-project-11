@@ -1,29 +1,15 @@
-const renderPosts = (posts, state, i18n) => {
-  const mainDiv = document.querySelector('.posts');
-  let cardDiv = mainDiv.querySelector('.card');
+import createContainer from './createContainer.js';
 
-  if (!cardDiv) {
-    cardDiv = document.createElement('div');
-    cardDiv.className = 'card border-0';
+const renderPosts = (posts, state, i18n, elements) => {
+  const mainDiv = elements.postsContainer;
+  let postsContainer = mainDiv.querySelector('.card');
 
-    const cardBodyDiv = document.createElement('div');
-    cardBodyDiv.className = 'card-body';
-
-    const h2 = document.createElement('h2');
-    h2.className = 'card-title h4';
-    h2.textContent = i18n.t('headers.posts');
-
-    const ul = document.createElement('ul');
-    ul.className = 'list-group border-0 rounded-0';
-
-    cardBodyDiv.appendChild(h2);
-    cardDiv.appendChild(cardBodyDiv);
-    cardDiv.appendChild(ul);
-
-    mainDiv.appendChild(cardDiv);
+  if (!postsContainer) {
+    postsContainer = createContainer('posts-list', 'headers.posts', i18n);
+    mainDiv.appendChild(postsContainer);
   }
 
-  const ul = cardDiv.querySelector('ul');
+  const ul = postsContainer.querySelector('ul');
   ul.innerHTML = '';
 
   posts.forEach((post) => {

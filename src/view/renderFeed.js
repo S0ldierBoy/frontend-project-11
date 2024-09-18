@@ -1,30 +1,14 @@
-const renderFeed = (feeds, i18n) => {
-  const mainDiv = document.querySelector('.feeds');
+import createContainer from './createContainer.js';
+
+const renderFeed = (feeds, i18n, elements) => {
+  const mainDiv = elements.feedsContainer;
   let feedsContainer = mainDiv.querySelector('.card');
 
   if (!feedsContainer) {
-    // Создаем новый контейнер, если его нет.
-    feedsContainer = document.createElement('div');
-    feedsContainer.className = 'card border-0';
-
-    const cardBodyDiv = document.createElement('div');
-    cardBodyDiv.className = 'card-body';
-
-    const h2 = document.createElement('h2');
-    h2.className = 'card-title h4';
-    h2.textContent = i18n.t('headers.feeds');
-
-    const ul = document.createElement('ul');
-    ul.className = 'feeds-group border-0 rounded-0';
-
-    cardBodyDiv.append(h2);
-    feedsContainer.append(cardBodyDiv);
-    feedsContainer.append(ul);
-
-    mainDiv.append(feedsContainer);
+    feedsContainer = createContainer('feeds-group', 'headers.feeds', i18n);
+    mainDiv.appendChild(feedsContainer);
   }
 
-  // Независимо от того, был ли создан feedsContainer или нет, заполняем данные
   const ul = feedsContainer.querySelector('ul');
   ul.innerHTML = '';
 

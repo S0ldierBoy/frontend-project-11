@@ -25,6 +25,7 @@ function runApp() {
         modal: document.querySelector('.modal-footer'),
         submitButton: document.querySelector('button[type="submit"]'),
         postsContainer: document.querySelector('.posts'),
+        feedsContainer: document.querySelector('.feeds'),
       };
 
       const state = {
