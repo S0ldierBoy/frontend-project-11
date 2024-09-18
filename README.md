@@ -6,7 +6,7 @@
 
 RSS Aggregator is a web application for reading RSS feeds, allowing users to conveniently collect and view updates from various sources in one place. The application automatically checks for updates in the feeds and displays new posts, helping you stay up-to-date with the latest content without the need to visit each site individually.
 
-## Особенности:
+## Features:
 
 - **Ease of Use:** Add RSS feed URLs, and the aggregator will automatically load and display new posts.
 - **Automatic Updates:** The application checks for updates every 5 seconds, ensuring you don't miss new content.
