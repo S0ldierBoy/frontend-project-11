@@ -35,8 +35,7 @@ export const checkForUpdates = (watchedState) => {
           feedId: feed.id,
         }));
 
-        /* eslint-disable-next-line no-param-reassign */
-        watchedState.posts = [...newPostsWithIds, ...watchedState.posts];
+        watchedState.posts.unshift(...newPostsWithIds)
       })
       .catch((error) => {
         console.error(`errors.rssFetchError ${feed.url}:`, error.message);

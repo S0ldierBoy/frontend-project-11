@@ -66,7 +66,7 @@ function runApp() {
             }));
 
             watchedState.feeds.unshift(feed);
-            watchedState.posts = [...posts, ...watchedState.posts];
+            watchedState.posts.unshift(...posts);
 
             watchedState.feedback = 'success';
             elements.submitButton.disabled = false;

@@ -15,9 +15,6 @@ const renderInput = (elements, state, i18n) => {
   } else {
     feedback.textContent = '';
   }
-
-  /* eslint-disable-next-line no-param-reassign */
-  state.feedback = null;
 };
 
 export default renderInput;

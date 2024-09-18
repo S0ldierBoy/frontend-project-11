@@ -22,30 +22,28 @@ const renderFeed = (feeds, i18n) => {
     feedsContainer.append(ul);
 
     mainDiv.append(feedsContainer);
-  } else {
-    // Добавляем новые данные
-
-    const ul = feedsContainer.querySelector('ul');
-    ul.innerHTML = '';
-
-    feeds.forEach(({ title, description }) => {
-      const li = document.createElement('li');
-      li.className = 'feeds-group-item border-0 border-end-0';
-
-      const h3 = document.createElement('h3');
-      h3.className = 'h6 m-0';
-      li.append(h3);
-
-      const p = document.createElement('p');
-      p.className = 'm-0 small text-black-50';
-      li.append(p);
-
-      h3.textContent = title;
-      p.textContent = description;
-
-      ul.append(li);
-    });
   }
+
+  // Независимо от того, был ли создан feedsContainer или нет, заполняем данные
+  const ul = feedsContainer.querySelector('ul');
+  ul.innerHTML = '';
+
+  feeds.forEach(({ title, description }) => {
+    const li = document.createElement('li');
+    li.className = 'feeds-group-item border-0 border-end-0';
+
+    const h3 = document.createElement('h3');
+    h3.className = 'h6 m-0';
+    h3.textContent = title;
+    li.append(h3);
+
+    const p = document.createElement('p');
+    p.className = 'm-0 small text-black-50';
+    p.textContent = description;
+    li.append(p);
+
+    ul.append(li);
+  });
 };
 
 export default renderFeed;
