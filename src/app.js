@@ -7,7 +7,6 @@ import resources from './locales/index.js';
 import domParser from './domParser.js';
 import { checkForUpdates, fetchRss } from './utils.js';
 import createWatchState from './view/watchState.js';
-import openModal from './view/modal.js';
 
 function runApp() {
   const i18nextInstance = i18n.createInstance();

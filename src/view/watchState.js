@@ -20,12 +20,13 @@ const createWatchState = (state, elements, i18n) => {
         renderPosts(state.posts, state, i18n, elements);
         break;
 
-      case 'selectedPostId':
+      case 'selectedPostId': {
         const post = state.posts.find((p) => p.id === state.selectedPostId);
         if (post) {
           openModal(post, i18n);
         }
         break;
+      }
 
       case 'error':
       case 'feedback':
