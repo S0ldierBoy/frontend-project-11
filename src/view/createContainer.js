@@ -19,4 +19,3 @@ const createContainer = (containerClass, headerText, i18n) => {
 };
 
 export default createContainer;
-
