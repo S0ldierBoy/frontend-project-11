@@ -15,7 +15,6 @@ const createContainer = (containerClass, headerText, i18n) => {
   cardBodyDiv.appendChild(h2);
   container.appendChild(cardBodyDiv);
   container.appendChild(ul);
-  
   return container;
 };
 
