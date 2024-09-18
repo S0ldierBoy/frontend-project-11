@@ -68,11 +68,11 @@ make install
 
 ## Technologies:
 
--JavaScript (ES6+)
--Webpack: Project bundling.
--Babel: Code transpilation for older browser support.
--Bootstrap: Styling and interface components.
--i18next: Internationalization and localization.
--Axios: HTTP client for requests.
--Lodash: Data manipulation utilities.
--on-change: State change tracking.
+- JavaScript (ES6+)
+- Webpack: Project bundling.
+- Babel: Code transpilation for older browser support.
+- Bootstrap: Styling and interface components.
+- i18next: Internationalization and localization.
+- Axios: HTTP client for requests.
+- Lodash: Data manipulation utilities.
+- on-change: State change tracking.
