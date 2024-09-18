@@ -33,6 +33,7 @@ function runApp() {
         error: null,
         feedback: null,
         viewedPosts: new Set(),
+        isSubmitting: false,
       };
 
       const watchedState = createWatchState(state, elements, i18nextInstance);
@@ -44,7 +45,7 @@ function runApp() {
 
         validateUrl(url, state)
           .then(() => {
-            elements.submitButton.disabled = true;
+            watchedState.isSubmitting = true;
             watchedState.error = null;
             return fetchRss(url);
           })
@@ -69,14 +70,14 @@ function runApp() {
             watchedState.posts.unshift(...posts);
 
             watchedState.feedback = 'success';
-            elements.submitButton.disabled = false;
+            watchedState.isSubmitting = false;
 
             e.target.reset();
             elements.input.focus();
           })
           .catch((error) => {
             watchedState.error = error.message;
-            elements.submitButton.disabled = false;
+            watchedState.isSubmitting = false;
           });
       });
 
@@ -87,7 +88,6 @@ function runApp() {
         if (target.tagName === 'A') {
           const postId = target.getAttribute('data-id');
           watchedState.viewedPosts.add(postId);
-          target.classList.replace('fw-bold', 'fw-normal');
         }
 
         if (target.tagName === 'BUTTON') {
@@ -96,10 +96,6 @@ function runApp() {
           if (post) {
             openModal(post, i18nextInstance);
             watchedState.viewedPosts.add(postId);
-
-            // Обновляем стиль ссылки
-            const link = target.closest('li').querySelector('a');
-            link.classList.replace('fw-bold', 'fw-normal');
           }
         }
       });

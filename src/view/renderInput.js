@@ -1,6 +1,6 @@
 const renderInput = (elements, state, i18n) => {
-  const { input, feedback } = elements;
-  const { error } = state;
+  const { input, feedback, submitButton } = elements;
+  const { error, isSubmitting } = state;
 
   feedback.classList.remove('text-success', 'text-danger');
   input.classList.remove('is-invalid');
@@ -15,6 +15,10 @@ const renderInput = (elements, state, i18n) => {
   } else {
     feedback.textContent = '';
   }
+
+  // Управляем кнопкой отправки
+  submitButton.disabled = isSubmitting;
+
 };
 
 export default renderInput;
