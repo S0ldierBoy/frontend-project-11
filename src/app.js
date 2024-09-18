@@ -35,6 +35,7 @@ function runApp() {
         feedback: null,
         viewedPosts: new Set(),
         isSubmitting: false,
+        selectedPostId: null,
       };
 
       const watchedState = createWatchState(state, elements, i18nextInstance);
@@ -93,11 +94,8 @@ function runApp() {
 
         if (target.tagName === 'BUTTON') {
           const postId = target.getAttribute('data-id');
-          const post = watchedState.posts.find((p) => p.id === postId);
-          if (post) {
-            openModal(post, i18nextInstance);
-            watchedState.viewedPosts.add(postId);
-          }
+          watchedState.selectedPostId = postId;
+          watchedState.viewedPosts.add(postId);
         }
       });
 

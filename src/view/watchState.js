@@ -2,6 +2,7 @@ import onChange from 'on-change';
 import renderInput from './renderInput.js';
 import renderFeed from './renderFeed.js';
 import renderPosts from './renderPosts.js';
+import openModal from './modal.js';
 
 const createWatchState = (state, elements, i18n) => {
   const watchedState = onChange(state, (path) => {
@@ -17,6 +18,13 @@ const createWatchState = (state, elements, i18n) => {
 
       case 'viewedPosts':
         renderPosts(state.posts, state, i18n, elements);
+        break;
+
+      case 'selectedPostId':
+        const post = state.posts.find((p) => p.id === state.selectedPostId);
+        if (post) {
+          openModal(post, i18n);
+        }
         break;
 
       case 'error':
