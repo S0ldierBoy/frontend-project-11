@@ -18,7 +18,6 @@ const renderInput = (elements, state, i18n) => {
 
   // Управляем кнопкой отправки
   submitButton.disabled = isSubmitting;
-
 };
 
 export default renderInput;
