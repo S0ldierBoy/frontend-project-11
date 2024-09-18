@@ -27,4 +27,3 @@ const createWatchState = (state, elements, i18n) => (
 );
 
 export default createWatchState;
-
