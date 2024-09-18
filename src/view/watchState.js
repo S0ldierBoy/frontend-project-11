@@ -3,7 +3,7 @@ import renderInput from './renderInput.js';
 import renderFeed from './renderFeed.js';
 import renderPosts from './renderPosts.js';
 
-const createWatchState = (state, elements, i18n) =>
+const createWatchState = (state, elements, i18n) => (
   onChange(state, (path) => {
     switch (path) {
       case 'feeds':
@@ -23,6 +23,8 @@ const createWatchState = (state, elements, i18n) =>
       default:
         break;
     }
-  });
+  })
+);
 
 export default createWatchState;
+

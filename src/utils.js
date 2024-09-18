@@ -35,7 +35,7 @@ export const checkForUpdates = (watchedState) => {
           feedId: feed.id,
         }));
 
-        watchedState.posts.unshift(...newPostsWithIds)
+        watchedState.posts.unshift(...newPostsWithIds);
       })
       .catch((error) => {
         console.error(`errors.rssFetchError ${feed.url}:`, error.message);
