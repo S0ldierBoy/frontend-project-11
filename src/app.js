@@ -49,7 +49,7 @@ async function runApp() {
         const url = formData.get('url').trim();
 
         // Валидация URL
-        validateUrl(url, state);
+        await validateUrl(url, state);
 
         // Получение RSS данных
         const data = await fetchRss(url);
