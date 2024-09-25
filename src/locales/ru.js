@@ -10,6 +10,7 @@ const resources = {
         unknownError: 'Неизвестная ошибка. Что-то пошло не так.', // unknownError
         i18nInitError: 'Ошибка инициализации i18n', // Новая ошибка для инициализации i18n
         rssFetchError: 'Ошибка загрузки RSS фида с ', // Новая ошибка для загрузки RSS фида
+        generalUpdateError: 'Критическая ошибка обновления фидов:',
       },
       successful: {
         rssLoadSuccess: 'RSS успешно загружен', // success1
