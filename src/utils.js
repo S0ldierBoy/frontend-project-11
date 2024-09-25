@@ -24,11 +24,9 @@ export const checkForUpdates = async (watchedState) => {
         const data = await fetchRss(feed.url);
         const parsedData = domParser(data.contents);
         const newPosts = parsedData.posts.filter(
-          (post) => (
+          (post) => 
             !watchedState.posts.some(
-              (existingPost) => existingPost.link === post.link
-            )),
-        );
+              (existingPost) => existingPost.link === post.link));
 
         const newPostsWithIds = newPosts.map((post) => ({
           ...post,
