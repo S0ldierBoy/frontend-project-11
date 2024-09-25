@@ -8,101 +8,104 @@ import domParser from './domParser.js';
 import { checkForUpdates, fetchRss } from './utils.js';
 import createWatchState from './view/watchState.js';
 
-function runApp() {
-  const i18nextInstance = i18n.createInstance();
-
-  i18nextInstance
-    .init({
+async function runApp() {
+  try {
+    const i18nextInstance = i18n.createInstance();
+    await i18nextInstance.init({
       lng: 'ru',
       resources,
-    })
-    .then(() => {
-      const elements = {
-        form: document.querySelector('.rss-form'),
-        input: document.querySelector('#url-input'),
-        feedback: document.querySelector('.feedback'),
-        modal: document.querySelector('.modal-footer'),
-        submitButton: document.querySelector('button[type="submit"]'),
-        postsContainer: document.querySelector('.posts'),
-        feedsContainer: document.querySelector('.feeds'),
-      };
+    });
 
-      const state = {
-        feeds: [],
-        posts: [],
-        error: null,
-        feedback: null,
-        viewedPosts: new Set(),
-        isSubmitting: false,
-        selectedPostId: null,
-      };
+    const elements = {
+      form: document.querySelector('.rss-form'),
+      input: document.querySelector('#url-input'),
+      feedback: document.querySelector('.feedback'),
+      modal: document.querySelector('.modal-footer'),
+      submitButton: document.querySelector('button[type="submit"]'),
+      postsContainer: document.querySelector('.posts'),
+      feedsContainer: document.querySelector('.feeds'),
+    };
 
-      const watchedState = createWatchState(state, elements, i18nextInstance);
+    const state = {
+      feeds: [],
+      posts: [],
+      error: null,
+      feedback: null,
+      viewedPosts: new Set(),
+      isSubmitting: false,
+      selectedPostId: null,
+    };
 
-      elements.form.addEventListener('submit', (e) => {
-        e.preventDefault();
+    const watchedState = createWatchState(state, elements, i18nextInstance);
+
+    // Обработчик отправки формы
+    elements.form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      watchedState.isSubmitting = true;
+      watchedState.error = null; // Сброс ошибки перед новым запросом
+
+      try {
         const formData = new FormData(e.target);
         const url = formData.get('url').trim();
 
-        validateUrl(url, state)
-          .then(() => {
-            watchedState.isSubmitting = true;
-            watchedState.error = null;
-            return fetchRss(url);
-          })
-          .then((data) => {
-            const dataWithoutId = domParser(data.contents);
-            const feedId = _.uniqueId('feed-');
+        // Валидация URL
+        validateUrl(url, state);
 
-            const feed = {
-              id: feedId,
-              title: dataWithoutId.title,
-              description: dataWithoutId.description,
-              url,
-            };
+        // Получение RSS данных
+        const data = await fetchRss(url);
 
-            const posts = dataWithoutId.posts.map((post) => ({
-              ...post,
-              id: _.uniqueId('post-'),
-              feedId,
-            }));
+        const dataWithoutId = domParser(data.contents);
+        const feedId = _.uniqueId('feed-');
 
-            watchedState.feeds.unshift(feed);
-            watchedState.posts.unshift(...posts);
+        const feed = {
+          id: feedId,
+          title: dataWithoutId.title,
+          description: dataWithoutId.description,
+          url,
+        };
 
-            watchedState.feedback = 'success';
-            watchedState.isSubmitting = false;
+        const posts = dataWithoutId.posts.map((post) => ({
+          ...post,
+          id: _.uniqueId('post-'),
+          feedId,
+        }));
 
-            e.target.reset();
-            elements.input.focus();
-          })
-          .catch((error) => {
-            watchedState.error = error.message;
-            watchedState.isSubmitting = false;
-          });
-      });
+        watchedState.feeds.unshift(feed);
+        watchedState.posts.unshift(...posts);
 
-      // Установка обработчиков событий
-      elements.postsContainer.addEventListener('click', (event) => {
-        const { target } = event;
+        watchedState.feedback = 'success';
+        watchedState.error = null; // Успешная обработка, очищаем ошибку
 
-        if (target.tagName === 'A') {
-          const postId = target.getAttribute('data-id');
-          watchedState.viewedPosts.add(postId);
-        }
-
-        if (target.tagName === 'BUTTON') {
-          const postId = target.getAttribute('data-id');
-          watchedState.selectedPostId = postId;
-          watchedState.viewedPosts.add(postId);
-        }
-      });
-
-      checkForUpdates(watchedState);
-    })
-    .catch((error) => {
-      console.error('errors.i18nInitError', error);
+        e.target.reset();
+        elements.input.focus();
+      } catch (error) {
+        watchedState.error = error.message;
+      } finally {
+        watchedState.isSubmitting = false; // Сбрасываем состояние отправки в любом случае
+      }
     });
+
+    // Обработчик кликов по постам
+    elements.postsContainer.addEventListener('click', (event) => {
+      const { target } = event;
+
+      if (target.tagName === 'A') {
+        const postId = target.getAttribute('data-id');
+        watchedState.viewedPosts.add(postId);
+      }
+
+      if (target.tagName === 'BUTTON') {
+        const postId = target.getAttribute('data-id');
+        watchedState.selectedPostId = postId;
+        watchedState.viewedPosts.add(postId);
+      }
+    });
+
+    // Запуск проверки обновлений
+    checkForUpdates(watchedState);
+  } catch (error) {
+    console.error('errors.i18nInitError', error);
+  }
 }
 
 runApp();
