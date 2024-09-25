@@ -26,8 +26,9 @@ export const checkForUpdates = async (watchedState) => {
         const newPosts = parsedData.posts.filter(
           (post) => (
             !watchedState.posts.some(
-              (existingPost) => existingPost.link === post.link
-            )),
+              (existingPost) => existingPost.link === post.link,
+            )
+          ),
         );
 
         const newPostsWithIds = newPosts.map((post) => ({
@@ -44,7 +45,7 @@ export const checkForUpdates = async (watchedState) => {
 
     await Promise.all(updatePromises);
   } catch (error) {
-    console.error(`errors.generalUpdateError`, error.message);
+    console.error('errors.generalUpdateError', error.message);
   } finally {
     setTimeout(() => checkForUpdates(watchedState), 5000);
   }
