@@ -6,7 +6,7 @@ export const fetchRss = async (url) => {
   try {
     const response = await axios.get(
       `https://allorigins.hexlet.app/get?url=${encodeURIComponent(url)}&disableCache=true`,
-      { timeout: 10000 }
+      { timeout: 10000 },
     );
     return response.data;
   } catch (error) {
@@ -24,10 +24,10 @@ export const checkForUpdates = async (watchedState) => {
         const data = await fetchRss(feed.url);
         const parsedData = domParser(data.contents);
         const newPosts = parsedData.posts.filter(
-          (post) =>
+          (post) => (
             !watchedState.posts.some(
               (existingPost) => existingPost.link === post.link
-            )
+            )),
         );
 
         const newPostsWithIds = newPosts.map((post) => ({
